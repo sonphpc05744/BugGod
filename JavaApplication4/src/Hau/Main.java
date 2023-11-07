@@ -128,6 +128,9 @@ public class Main extends javax.swing.JFrame {
 
         Menu2.setBackground(new java.awt.Color(204, 204, 204));
         Menu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Menu2MouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 Menu2MousePressed(evt);
             }
@@ -251,6 +254,13 @@ public class Main extends javax.swing.JFrame {
         jDesktopPane1.add(menu1).setVisible(true);
         
     }//GEN-LAST:event_Menu1MouseClicked
+
+    private void Menu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Menu2MouseClicked
+        // TODO add your handling code here:
+        ChiTieu menu1 = new ChiTieu();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(menu1).setVisible(true);
+    }//GEN-LAST:event_Menu2MouseClicked
 
     /**
      * @param args the command line arguments
