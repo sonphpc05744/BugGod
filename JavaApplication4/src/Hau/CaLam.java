@@ -85,10 +85,12 @@ public class CaLam extends javax.swing.JInternalFrame {
         jPanel2.add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 340, 91, 34));
 
         TrangThai.add(jRadioButton1);
+        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jRadioButton1.setText("Có mặt");
         jPanel2.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, -1));
 
         TrangThai.add(jRadioButton2);
+        jRadioButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jRadioButton2.setText("Vắng");
         jPanel2.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, -1, -1));
 
