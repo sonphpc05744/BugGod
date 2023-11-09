@@ -6,12 +6,18 @@
 package com.raven.main;
 
 import com.raven.event.EventMenuSelected;
+import com.raven.form.ChiTieu1;
 import com.raven.form.Form_1;
 import com.raven.form.Form_2;
 import com.raven.form.Form_3;
 import com.raven.form.Form_Home;
 import com.raven.form.HoaDon2;
+import com.raven.form.KhuyenMai1;
 import com.raven.form.Menu2;
+import com.raven.form.QuanLyNhanVien1;
+import com.raven.form.QuanLySanPham1;
+import com.raven.form.ThongKe1;
+import com.raven.form.TrangChu;
 import java.awt.Color;
 import javax.swing.JComponent;
 
@@ -24,35 +30,51 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    private Form_Home home;
+    private TrangChu home;
     private Menu2 form1;
     private HoaDon2 form2;
-    private Form_3 form3;
+    private QuanLySanPham1 form3;
+    private KhuyenMai1 form4;
+    private ThongKe1 form5;
+    private QuanLyNhanVien1 form6;
+    private ChiTieu1 form7;
 
     public Main() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
-        home = new Form_Home();
+        home = new TrangChu();
         form1 = new Menu2();
         form2 = new HoaDon2();
-        form3 = new Form_3();
+        form3 = new QuanLySanPham1();
+        form4 = new KhuyenMai1();
+        form5 = new ThongKe1();
+        form6 = new QuanLyNhanVien1();
+        form7 = new ChiTieu1();
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void selected(int index) {
                 if (index == 0) {
                     setForm(home);
-                } else if (index == 1) {
-                    setForm(form1);
                 } else if (index == 2) {
+                    setForm(form1);
+                } else if (index == 4) {
                     setForm(form2);
-                } else if (index == 3) {
+                } else if (index == 6) {
                     setForm(form3);
+                } else if(index == 8){
+                    setForm(form4);
+                } else if(index == 10){
+                    setForm(form5);
+                } else if(index == 12){
+                    setForm(form6);
+                } else if(index == 14){
+                    setForm(form7);
                 }
             }
         });
         //  set when system open start with home form
-        setForm(new Form_Home());
+        setForm(new TrangChu());
     }
 
     private void setForm(JComponent com) {
@@ -79,6 +101,8 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
+        panelBorder1.setBackground(new java.awt.Color(255, 153, 255));
+
         header2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 
         mainPanel.setOpaque(false);
@@ -88,21 +112,23 @@ public class Main extends javax.swing.JFrame {
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(header2, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE)
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 959, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(header2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addComponent(header2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(1, 1, 1)
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
