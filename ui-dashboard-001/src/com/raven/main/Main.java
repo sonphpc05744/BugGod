@@ -12,6 +12,7 @@ import com.raven.form.Form_3;
 import com.raven.form.Form_Home;
 import com.raven.form.HoaDon2;
 import com.raven.form.Menu2;
+import com.raven.form.QuanLyNhanVien1;
 import java.awt.Color;
 import javax.swing.JComponent;
 
@@ -28,7 +29,7 @@ public class Main extends javax.swing.JFrame {
     private Menu2 form1;
     private HoaDon2 form2;
     private Form_3 form3;
-
+    private QuanLyNhanVien1 nhanVien1;
     public Main() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
@@ -36,6 +37,7 @@ public class Main extends javax.swing.JFrame {
         form1 = new Menu2();
         form2 = new HoaDon2();
         form3 = new Form_3();
+        nhanVien1 = new QuanLyNhanVien1();
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
@@ -47,7 +49,7 @@ public class Main extends javax.swing.JFrame {
                 } else if (index == 2) {
                     setForm(form2);
                 } else if (index == 3) {
-                    setForm(form3);
+                    setForm(nhanVien1);
                 }
             }
         });

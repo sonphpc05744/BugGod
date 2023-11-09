@@ -4,6 +4,12 @@
  */
 package com.raven.form;
 
+import PeachCoffe.entity.NhanVien;
+import PeachCoffee.DAO.NhanVienDao;
+import PeachCoffee.utils.MsgBox;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author HP
@@ -15,6 +21,30 @@ public class QuanLyNhanVien1 extends javax.swing.JPanel {
      */
     public QuanLyNhanVien1() {
         initComponents();
+        init();
+    }
+    NhanVienDao daonv = new NhanVienDao();
+    void init(){
+        
+        this.fillTable();
+    }
+    void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
+        model.setRowCount(0);
+        try {
+            List<NhanVien> list = daonv.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
+            for (NhanVien nv : list) {
+                Object[] row = {
+                    nv.getMaNV(),
+                    nv.getTenNV(),
+                    nv.getChucVu()
+                };
+                model.addRow(row);// thêm một hàng vào table
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            //MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
     }
 
     /**
@@ -123,7 +153,7 @@ public class QuanLyNhanVien1 extends javax.swing.JPanel {
                 {null, null, null}
             },
             new String [] {
-                "Mã NV", "Tên NV", "Vai trò"
+                "MaNV", "TenNV", "ChucVu"
             }
         ));
         jScrollPane2.setViewportView(tblNhanVien);
