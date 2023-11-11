@@ -5,6 +5,7 @@
  */
 package com.raven.main;
 
+import com.raven.event.EventItem;
 import com.raven.event.EventMenuSelected;
 import com.raven.form.ChiTieu1;
 import com.raven.form.Form_1;
@@ -13,13 +14,20 @@ import com.raven.form.Form_3;
 import com.raven.form.Form_Home;
 import com.raven.form.HoaDon2;
 import com.raven.form.KhuyenMai1;
-import com.raven.form.Menu2;
+import com.raven.form.Menu1;
 import com.raven.form.QuanLyNhanVien1;
 import com.raven.form.QuanLySanPham1;
 import com.raven.form.ThongKe1;
 import com.raven.form.TrangChu;
+import com.raven.model.ModelItem;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Point;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,19 +39,20 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     private TrangChu home;
-    private Menu2 form1;
+    private Menu1 form1;
     private HoaDon2 form2;
     private QuanLySanPham1 form3;
     private KhuyenMai1 form4;
     private ThongKe1 form5;
     private QuanLyNhanVien1 form6;
     private ChiTieu1 form7;
+    private ModelItem itemSelected;
 
     public Main() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
         home = new TrangChu();
-        form1 = new Menu2();
+        form1 = new Menu1();
         form2 = new HoaDon2();
         form3 = new QuanLySanPham1();
         form4 = new KhuyenMai1();
@@ -57,18 +66,19 @@ public class Main extends javax.swing.JFrame {
                 if (index == 0) {
                     setForm(home);
                 } else if (index == 2) {
+                    init();
                     setForm(form1);
                 } else if (index == 4) {
                     setForm(form2);
                 } else if (index == 6) {
                     setForm(form3);
-                } else if(index == 8){
+                } else if (index == 8) {
                     setForm(form4);
-                } else if(index == 10){
+                } else if (index == 10) {
                     setForm(form5);
-                } else if(index == 12){
+                } else if (index == 12) {
                     setForm(form6);
-                } else if(index == 14){
+                } else if (index == 14) {
                     setForm(form7);
                 }
             }
@@ -82,6 +92,57 @@ public class Main extends javax.swing.JFrame {
         mainPanel.add(com);
         mainPanel.repaint();
         mainPanel.revalidate();
+    }
+
+    private void init() {
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(form1);
+        testData();
+    }
+
+    private void testData() {
+        form1.setEvent(new EventItem() {
+            @Override
+            public void itemClick(Component com, ModelItem item) {
+                if (itemSelected != null) {
+                    //        mainPanel.setImageOld(itemSelected.getImage());
+                }
+                if (itemSelected != item) {
+                    //         if (!animator.isRunning()) {
+                    itemSelected = item;
+                    //         animatePoint = getLocationOf(com);
+//                    mainPanel.setImage(item.getImage());
+//                    //        mainPanel.setImageLocation(animatePoint);
+//                    mainPanel.setImageSize(new Dimension(180, 120));
+//                    mainPanel.repaint();
+                    form1.setSelected(com);
+                    
+                    //home.showItem(item);
+                    //     animator.start();
+                    //    }
+                }
+            }
+        });
+        int ID = 1;
+        for (int i = 0; i <= 5; i++) {
+            form1.addItem(new ModelItem(ID++, "4DFWD PULSE", "This product is excluded from all promotional discounts and offers.", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img1.png"))));
+            form1.addItem(new ModelItem(ID++, "FORUM MID", "This product is excluded from all promotional discounts and offers.", 100, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img2.png"))));
+            form1.addItem(new ModelItem(ID++, "SUPERNOVA", "NMD City Stock 2", 150, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img3.png"))));
+            form1.addItem(new ModelItem(ID++, "Adidas", "NMD City Stock 2", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img4.png"))));
+            form1.addItem(new ModelItem(ID++, "Adidas", "NMD City Stock 2", 120, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img5.png"))));
+            form1.addItem(new ModelItem(ID++, "4DFWD PULSE", "This product is excluded from all promotional discounts and offers.", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img6.png"))));
+        }
+    }
+
+    private Point getLocationOf(Component com) {
+        Point p = form1.getPanelItemLocation();
+        int x = p.x;
+        int y = p.y;
+        int itemX = com.getX();
+        int itemY = com.getY();
+        int left = 10;
+        int top = 35;
+        return new Point(x + itemX + left, y + itemY + top);
     }
 
     /**
@@ -112,23 +173,24 @@ public class Main extends javax.swing.JFrame {
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(panelBorder1Layout.createSequentialGroup()
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 959, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(header2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(header2, javax.swing.GroupLayout.DEFAULT_SIZE, 1293, Short.MAX_VALUE)
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addComponent(header2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(1, 1, 1)
+                        .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(panelBorder1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
