@@ -131,7 +131,6 @@ public class Menu1 extends javax.swing.JPanel {
         scroll1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         panelItem1.setBackground(new java.awt.Color(204, 204, 255));
-        panelItem1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         scroll1.setViewportView(panelItem1);
 
         jPanel5.add(scroll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, 580, 470));
