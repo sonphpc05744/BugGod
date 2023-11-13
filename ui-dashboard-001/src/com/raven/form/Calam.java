@@ -49,6 +49,12 @@ public class Calam extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+
+        jTabbedPane1.setBackground(new java.awt.Color(204, 204, 255));
+        jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -78,14 +84,25 @@ public class Calam extends javax.swing.JDialog {
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 123, 537, 152));
 
+        btnHuy.setBackground(new java.awt.Color(255, 204, 209));
+        btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnHuy.setText("Hủy");
-        jPanel2.add(btnHuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 91, 34));
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnHuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, 91, 34));
 
+        btnSua.setBackground(new java.awt.Color(252, 255, 204));
+        btnSua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSua.setText("Cập nhật");
-        jPanel2.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 91, 34));
+        jPanel2.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 91, 34));
 
+        btnXacNhan.setBackground(new java.awt.Color(209, 255, 204));
+        btnXacNhan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXacNhan.setText("Xác nhận");
-        jPanel2.add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 340, 91, 34));
+        jPanel2.add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 340, 100, 34));
 
         jRadioButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jRadioButton1.setText("Có mặt");
@@ -100,6 +117,8 @@ public class Calam extends javax.swing.JDialog {
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, -1, -1));
 
         jTabbedPane1.addTab("CA", jPanel2);
+
+        jPanel3.setBackground(new java.awt.Color(204, 204, 255));
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -177,6 +196,10 @@ public class Calam extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHuyActionPerformed
 
     /**
      * @param args the command line arguments

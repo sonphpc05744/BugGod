@@ -26,6 +26,8 @@ public class ListMenu<E extends Object> extends JList<E> {
     public ListMenu() {
         model = new DefaultListModel();
         setModel(model);
+        setFixedCellWidth(50); // Thay 200 bằng kích thước mong muốn
+        setFixedCellHeight(80);
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {

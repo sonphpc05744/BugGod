@@ -36,6 +36,9 @@ public class TrangChu extends javax.swing.JPanel {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jButton1.setBackground(new java.awt.Color(204, 204, 255));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(0, 51, 204));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/contact-list.png"))); // NOI18N
         jButton1.setText("Ca làm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -43,10 +46,10 @@ public class TrangChu extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 560, 130, 40));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\Fpoly_Study\\DuAn1\\BGOD1\\BugGod\\ui-dashboard-001\\src\\com\\raven\\icon\\BGCF.jpg")); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 620));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/NEN2.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 720));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
