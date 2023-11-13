@@ -47,16 +47,16 @@ public class Header extends javax.swing.JPanel {
         jButton1.setForeground(new java.awt.Color(0, 0, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/clock.png"))); // NOI18N
         jButton1.setText("Giao ca");
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 20, -1, 39));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 20, -1, 39));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(239, 237, 237));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Tên tài khoản");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 30, 100, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 30, 100, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/user (1).png"))); // NOI18N
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 10, -1, 58));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 10, -1, 58));
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/Delete.png"))); // NOI18N
@@ -67,7 +67,7 @@ public class Header extends javax.swing.JPanel {
                 jLabel6MouseClicked(evt);
             }
         });
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1250, 0, 43, 50));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 10, 43, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked

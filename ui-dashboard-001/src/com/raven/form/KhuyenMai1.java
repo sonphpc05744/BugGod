@@ -4,6 +4,11 @@
  */
 package com.raven.form;
 
+import PeachCoffe.entity.KhuyenMai;
+import PeachCoffee.DAO.KhuyenMaiDao;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author HP
@@ -15,8 +20,33 @@ public class KhuyenMai1 extends javax.swing.JPanel {
      */
     public KhuyenMai1() {
         initComponents();
+        init();
     }
-
+    void init(){
+        fillTable();
+    }
+    
+    KhuyenMaiDao daokm =new KhuyenMaiDao();
+         void fillTable(){
+          DefaultTableModel model = (DefaultTableModel) tblKhuyenMai.getModel();
+        model.setRowCount(0);
+        try {
+            List<KhuyenMai> list = daokm.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
+            for (KhuyenMai nv : list) {
+                Object[] row = {
+                    nv.getMaKM(),
+                    nv.getTenKM(),
+                    
+                    nv.getGhiChu(),
+                    nv.getGiaKM()
+                };
+                model.addRow(row);// thêm một hàng vào table
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            //MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +88,7 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblKhuyenMai = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         btnTimSP = new javax.swing.JButton();
         txtTenSP = new javax.swing.JTextField();
@@ -274,8 +304,8 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jTable2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblKhuyenMai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tblKhuyenMai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -283,7 +313,7 @@ public class KhuyenMai1 extends javax.swing.JPanel {
                 "Mã KM", "Tên KM", "Loại KM", "Giá trị", "Trạng thái"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblKhuyenMai);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Tên sản phẩm:");
@@ -457,11 +487,11 @@ public class KhuyenMai1 extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JRadioButton rdoDaKetThuc;
     private javax.swing.JRadioButton rdoDangDienRa;
     private javax.swing.JRadioButton rdoPhanTram;
     private javax.swing.JRadioButton rdoVND;
+    private javax.swing.JTable tblKhuyenMai;
     private javax.swing.JTextField txtGiaTri;
     private javax.swing.JTextField txtMaKM;
     private javax.swing.JTextField txtTenKM;

@@ -4,19 +4,81 @@
  */
 package com.raven.form;
 
+import PeachCoffe.entity.CaLam;
+import PeachCoffe.entity.CaLamViec;
+import PeachCoffee.DAO.CaLamDao;
+import PeachCoffee.DAO.CaLamViecDao;
+import PeachCoffee.utils.MsgBox;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author HP
  */
 public class Calam extends javax.swing.JDialog {
 
-    /**
-     * Creates new form Calam
-     */
     public Calam(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        init();
+    }
+
+    void init() {
+        fillTableCLV();
+        fillTableCaLam();
+    }
+    CaLamViecDao daoclv = new CaLamViecDao();
+    CaLamDao daocl = new CaLamDao();
+
+    void fillTableCLV() {
+        DefaultTableModel model = (DefaultTableModel) tblCaLamViec.getModel();
+        model.setRowCount(0);
+        try {
+            List<CaLamViec> list = daoclv.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
+
+            for (int i = 0; i < list.size(); i++) {
+                CaLamViec clv = list.get(i);
+                // NhanVien nv = new NhanVien();
+
+                String trangThai = "Đang làm";
+                Object[] row = {
+                    i + 1,
+                    clv.getNhanVienTrucCa(),
+                    trangThai,
+                    clv.getGhiChu()
+
+                };
+                model.addRow(row);// thêm một hàng vào table
+            }
+        } catch (Exception e) {
+            //e.printStackTrace(); 
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void fillTableCaLam() {
+        DefaultTableModel model = (DefaultTableModel) tblCaLam.getModel();
+        model.setRowCount(0);
+        try {
+            List<CaLam> list1 = daocl.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
+
+            for (CaLam cl : list1) {
+
+                Object[] row = {
+                    cl.getMaCa(),
+                    cl.getMaNV(),
+                    cl.isTrangThai() ? "Đang hoạt đọng" : "Chưa hoạt động",
+                    cl.getGhiChu()
+                };
+                model.addRow(row);// thêm một hàng vào table
+            }
+
+        } catch (Exception e) {
+            //e.printStackTrace(); 
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
     }
 
     /**
@@ -35,7 +97,7 @@ public class Calam extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCaLamViec = new javax.swing.JTable();
         btnHuy = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXacNhan = new javax.swing.JButton();
@@ -44,7 +106,7 @@ public class Calam extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblCaLam = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -69,7 +131,7 @@ public class Calam extends javax.swing.JDialog {
         jLabel4.setText("Nhân viên phục vụ:");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 97, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCaLamViec.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -80,7 +142,7 @@ public class Calam extends javax.swing.JDialog {
                 "STT", "Tên NV", "Trạng thái", "Ghi chú"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCaLamViec);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 123, 537, 152));
 
@@ -120,7 +182,7 @@ public class Calam extends javax.swing.JDialog {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblCaLam.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -131,7 +193,7 @@ public class Calam extends javax.swing.JDialog {
                 "Ca làm", "Nhân viên", "Trạng thái", "Ghi chú"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblCaLam);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -260,7 +322,7 @@ public class Calam extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tblCaLam;
+    private javax.swing.JTable tblCaLamViec;
     // End of variables declaration//GEN-END:variables
 }

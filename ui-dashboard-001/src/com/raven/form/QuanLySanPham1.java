@@ -4,6 +4,10 @@
  */
 package com.raven.form;
 
+import PeachCoffe.entity.SanPham;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author HP
@@ -15,6 +19,30 @@ public class QuanLySanPham1 extends javax.swing.JPanel {
      */
     public QuanLySanPham1() {
         initComponents();
+    }
+    
+    void init(){
+        
+    }
+    
+            void fillTable(){
+        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
+        model.setRowCount(0);
+        try {
+            List<SanPham> list = daosp.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
+            for (SanPham nv : list) {
+                Object[] row = {
+                    nv.getMaSP(),
+                    nv.getTenSP(),
+                    nv.getGia(),
+                    nv.getMaLSP()
+                };
+                model.addRow(row);// thêm một hàng vào table
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            //MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
     }
 
     /**
