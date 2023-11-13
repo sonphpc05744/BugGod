@@ -46,7 +46,7 @@ public class MenuItem extends javax.swing.JPanel {
 
         lbIcon.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbName.setForeground(new java.awt.Color(255, 255, 255));
         lbName.setText("Menu Name");
 
@@ -59,7 +59,7 @@ public class MenuItem extends javax.swing.JPanel {
                 .addComponent(lbIcon)
                 .addGap(18, 18, 18)
                 .addComponent(lbName)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

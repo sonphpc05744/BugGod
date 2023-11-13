@@ -162,10 +162,11 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        panelBorder1.setBackground(new java.awt.Color(255, 153, 255));
+        panelBorder1.setBackground(new java.awt.Color(208, 133, 229));
 
         header2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 
+        mainPanel.setBackground(new java.awt.Color(204, 204, 255));
         mainPanel.setOpaque(false);
         mainPanel.setLayout(new java.awt.BorderLayout());
 
