@@ -30,25 +30,25 @@ public class Menu extends javax.swing.JPanel {
 
     private void init() {
         listMenu1.addItem(new Model_Menu("1", "Trang chủ", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
+       // listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("2", "Menu", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
+    //    listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("3", "Hóa đơn", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
+    //    listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("4", "Sản phẩm", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
+    //    listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("5", "Khuyến mãi", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
+   //     listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
 //        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
 //
 //        listMenu1.addItem(new Model_Menu("", "My Data", Model_Menu.MenuType.TITLE));
 //        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("6", "Thống kê", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
+ //       listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("7", "Nhân viên", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
+ //       listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("8", "Chi tiêu", Model_Menu.MenuType.MENU));
-        listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
+ //       listMenu1.addItem(new Model_Menu("", " ", Model_Menu.MenuType.EMPTY));
 //        listMenu1.addItem(new Model_Menu("9", "More", Model_Menu.MenuType.MENU));
 //        listMenu1.addItem(new Model_Menu("10", "Logout", Model_Menu.MenuType.MENU));
 //        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
