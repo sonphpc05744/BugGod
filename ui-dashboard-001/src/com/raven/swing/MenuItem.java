@@ -46,7 +46,7 @@ public class MenuItem extends javax.swing.JPanel {
 
         lbIcon.setForeground(new java.awt.Color(255, 255, 255));
 
-        lbName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbName.setForeground(new java.awt.Color(255, 255, 255));
         lbName.setText("Menu Name");
 

@@ -65,20 +65,20 @@ public class Main extends javax.swing.JFrame {
             public void selected(int index) {
                 if (index == 0) {
                     setForm(home);
-                } else if (index == 2) {
+                } else if (index == 1) {
                     init();
                     setForm(form1);
-                } else if (index == 4) {
+                } else if (index == 2) {
                     setForm(form2);
-                } else if (index == 6) {
+                } else if (index == 3) {
                     setForm(form3);
-                } else if (index == 8) {
+                } else if (index == 4) {
                     setForm(form4);
-                } else if (index == 10) {
+                } else if (index == 5) {
                     setForm(form5);
-                } else if (index == 12) {
+                } else if (index == 6) {
                     setForm(form6);
-                } else if (index == 14) {
+                } else if (index == 7) {
                     setForm(form7);
                 }
             }
