@@ -120,7 +120,9 @@ public class Menu1 extends javax.swing.JPanel {
         jLabel24 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 204, 255));
+
+        jPanel5.setBackground(new java.awt.Color(204, 204, 255));
         jPanel5.setOpaque(false);
         jPanel5.setPreferredSize(new java.awt.Dimension(959, 615));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

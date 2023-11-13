@@ -67,7 +67,7 @@ public class KhuyenMai1 extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(1042, 715));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
