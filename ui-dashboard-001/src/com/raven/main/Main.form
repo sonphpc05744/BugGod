@@ -37,7 +37,7 @@
     <Container class="com.raven.swing.PanelBorder" name="panelBorder1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="e5" green="85" red="d0" type="rgb"/>
+          <Color blue="ff" green="99" red="ff" type="rgb"/>
         </Property>
       </Properties>
 
@@ -83,9 +83,6 @@
         </Component>
         <Container class="javax.swing.JPanel" name="mainPanel">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="cc" red="cc" type="rgb"/>
-            </Property>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
 

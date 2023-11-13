@@ -8,9 +8,6 @@ package com.raven.main;
 import com.raven.event.EventItem;
 import com.raven.event.EventMenuSelected;
 import com.raven.form.ChiTieu1;
-import com.raven.form.Form_1;
-import com.raven.form.Form_2;
-import com.raven.form.Form_3;
 import com.raven.form.Form_Home;
 import com.raven.form.HoaDon2;
 import com.raven.form.KhuyenMai1;
@@ -162,11 +159,10 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        panelBorder1.setBackground(new java.awt.Color(208, 133, 229));
+        panelBorder1.setBackground(new java.awt.Color(255, 153, 255));
 
         header2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
 
-        mainPanel.setBackground(new java.awt.Color(204, 204, 255));
         mainPanel.setOpaque(false);
         mainPanel.setLayout(new java.awt.BorderLayout());
 
