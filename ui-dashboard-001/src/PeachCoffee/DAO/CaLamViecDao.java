@@ -59,6 +59,7 @@ public class CaLamViecDao extends PeachCoffeeDAO<CaLamViec, String> {
                 entiny.setNhanVienTrucCa(rs.getString(3));
                 entiny.setThu(rs.getString(4));
                 entiny.setGhiChu(rs.getString(5));
+                entiny.setTrangThai(rs.getBoolean(6));
                 list.add(entiny);
             }
         } catch (Exception e) {

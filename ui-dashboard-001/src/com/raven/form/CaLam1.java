@@ -43,11 +43,10 @@ public class CaLam1 extends javax.swing.JPanel {
                 CaLamViec clv = list.get(i);
                 // NhanVien nv = new NhanVien();
 
-                String trangThai = "Đang làm";
-                Object[] row = {
+                 Object[] row = {
                     i + 1,
                     clv.getNhanVienTrucCa(),
-                    trangThai,
+                    clv.isTrangThai() ? "Đang làm việc" : "Đã nghỉ",
                     clv.getGhiChu()
 
                 };

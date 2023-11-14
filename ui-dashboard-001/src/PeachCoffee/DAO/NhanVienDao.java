@@ -27,12 +27,12 @@ public class NhanVienDao extends PeachCoffeeDAO<NhanVien, String> {
 
     @Override
     public void insert(NhanVien entity) {
-        JdbcHelper.update(INSERT_SQL, entity.getMaNV(), entity.getTenNV(), entity.getEmail(), entity.getSDT(), entity.getMatKhau(), entity.getNgayVaoLam(), entity.getGhiChu(), entity.isGioiTinh(), entity.getTrangThai(), entity.getChucVu());
+       // JdbcHelper.update(INSERT_SQL, entity.getMaNV(), entity.getTenNV(), entity.getEmail(), entity.getSDT(), entity.getMatKhau(), entity.getNgayVaoLam(), entity.getGhiChu(), entity.isGioiTinh(), entity.getTrangThai(), entity.getChucVu());
     }
 
     @Override
     public void update(NhanVien entity) {
-        JdbcHelper.update(UPDATE_SQL, entity.getTenNV(), entity.getEmail(), entity.getSDT(), entity.getMatKhau(), entity.getNgayVaoLam(), entity.getGhiChu(), entity.isGioiTinh(), entity.getTrangThai(), entity.getChucVu(), entity.getMaNV());
+       // JdbcHelper.update(UPDATE_SQL, entity.getTenNV(), entity.getEmail(), entity.getSDT(), entity.getMatKhau(), entity.getNgayVaoLam(), entity.getGhiChu(), entity.isGioiTinh(), entity.getTrangThai(), entity.getChucVu(), entity.getMaNV());
     }
 
     @Override
@@ -72,8 +72,9 @@ public class NhanVienDao extends PeachCoffeeDAO<NhanVien, String> {
                 entiny.setNgayVaoLam(rs.getDate("NgayVaoLam"));
                 entiny.setGhiChu(rs.getString("GhiChu"));
                 entiny.setGioiTinh(rs.getBoolean("GioiTinh"));
-                entiny.setTrangThai(rs.getString("TrangThai"));
-                entiny.setChucVu( rs.getInt("ChucVu"));
+                entiny.setTrangThai(rs.getBoolean("TrangThai"));
+                entiny.setChucVu(rs.getBoolean("ChucVu"));
+                entiny.setHinh(rs.getString("Hinh"));
 
                 list.add(entiny);
             }

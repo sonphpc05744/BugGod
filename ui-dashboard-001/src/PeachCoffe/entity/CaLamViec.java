@@ -14,16 +14,18 @@ public class CaLamViec {
     public String NhanVienTrucCa;
     public String Thu;
     public String GhiChu;
+    public boolean TrangThai;
 
     public CaLamViec() {
     }
 
-    public CaLamViec(String MaCLV, String TenCLV, String NhanVienTrucCa, String Thu, String GhiChu) {
+    public CaLamViec(String MaCLV, String TenCLV, String NhanVienTrucCa, String Thu, String GhiChu, boolean TrangThai) {
         this.MaCLV = MaCLV;
         this.TenCLV = TenCLV;
         this.NhanVienTrucCa = NhanVienTrucCa;
         this.Thu = Thu;
         this.GhiChu = GhiChu;
+        this.TrangThai = TrangThai;
     }
 
     public String getMaCLV() {
@@ -65,6 +67,15 @@ public class CaLamViec {
     public void setGhiChu(String GhiChu) {
         this.GhiChu = GhiChu;
     }
-    
+
+    public boolean isTrangThai() {
+        return TrangThai;
+    }
+
+    public void setTrangThai(boolean TrangThai) {
+        this.TrangThai = TrangThai;
+    }
+
+  
     
 }

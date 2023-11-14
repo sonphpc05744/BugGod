@@ -16,17 +16,21 @@ public class KhuyenMai {
     public String NgayKT;
     public float GiaKM;
     public String GhiChu;
+    public boolean TrangThai;
+    public boolean LoaiKM;
 
     public KhuyenMai() {
     }
 
-    public KhuyenMai(String MaKM, String TenKM, String NgayBD, String NgayKT, float GiaKM, String GhiChu) {
+    public KhuyenMai(String MaKM, String TenKM, String NgayBD, String NgayKT, float GiaKM, String GhiChu, boolean TrangThai, boolean LoaiKM) {
         this.MaKM = MaKM;
         this.TenKM = TenKM;
         this.NgayBD = NgayBD;
         this.NgayKT = NgayKT;
         this.GiaKM = GiaKM;
         this.GhiChu = GhiChu;
+        this.TrangThai = TrangThai;
+        this.LoaiKM = LoaiKM;
     }
 
     public String getMaKM() {
@@ -76,6 +80,23 @@ public class KhuyenMai {
     public void setGhiChu(String GhiChu) {
         this.GhiChu = GhiChu;
     }
-    
-    
+
+    public boolean isTrangThai() {
+        return TrangThai;
+    }
+
+    public void setTrangThai(boolean TrangThai) {
+        this.TrangThai = TrangThai;
+    }
+
+    public boolean isLoaiKM() {
+        return LoaiKM;
+    }
+
+    public void setLoaiKM(boolean LoaiKM) {
+        this.LoaiKM = LoaiKM;
+    }
+
+
+
 }

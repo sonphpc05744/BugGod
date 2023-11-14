@@ -17,6 +17,12 @@ import java.util.List;
 public class KhuyenMaiDao extends PeachCoffeeDAO<KhuyenMai, String> {
 
     String SELECT_ALL_SQL = "Select * from KhuyenMai";
+    final String SELECT_BY_ID_SQL = "SELECT * from KhuyenMai where MaKM = ?";
+
+    public List<KhuyenMai> selectByKeyword(String keyword) {
+        String sql = "SELECT * FROM KhuyenMai WHERE TenKM LIKE ?";
+        return this.selectBySql(sql, "%" + keyword + "%");
+    }
 
     @Override
     public void insert(KhuyenMai entity) {
@@ -35,7 +41,12 @@ public class KhuyenMaiDao extends PeachCoffeeDAO<KhuyenMai, String> {
 
     @Override
     public KhuyenMai selectById(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<KhuyenMai> list = selectBySql(SELECT_BY_ID_SQL, id);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -69,8 +80,9 @@ public class KhuyenMaiDao extends PeachCoffeeDAO<KhuyenMai, String> {
                 String ngayKTString = dateFormat.format(ngayKT);
                 entiny.setNgayKT(ngayKTString);
                 entiny.setGiaKM(rs.getFloat(5));
-                entiny.setGhiChu(rs.getString("GhiChu"));
-
+                entiny.setGhiChu(rs.getString(6));
+                entiny.setTrangThai(rs.getBoolean(7));
+                entiny.setLoaiKM(rs.getBoolean(8));
                 list.add(entiny);
             }
         } catch (Exception e) {

@@ -12,8 +12,8 @@ import java.sql.*;
  */
 public class JdbcHelper {
         static  String user = "sa";
-        static String password = "huuphuc2004";
-        static String url = "jdbc:sqlserver://localhost:1433;databaseName=Peach_Coffee;encrypt=true;trustServerCertificate=true;";
+        static String password = "123456";
+        static String url = "jdbc:sqlserver://localhost:1433;databaseName=Peach_Coffee1;encrypt=true;trustServerCertificate=true;";
     static {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

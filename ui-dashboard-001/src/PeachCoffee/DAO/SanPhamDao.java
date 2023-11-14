@@ -18,7 +18,10 @@ import java.util.List;
 public class SanPhamDao extends PeachCoffeeDAO<SanPham, String> {
 
     String SELECT_ALL_SQL = "Select * from SanPham";
-
+    public  List<SanPham> selectByKeyword(String keyword){
+        String sql ="SELECT * FROM SanPham WHERE TenSP LIKE ?";
+        return this.selectBySql(sql, "%"+keyword+"%");
+    }
     @Override
     public void insert(SanPham entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

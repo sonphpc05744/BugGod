@@ -15,13 +15,14 @@ public class NhanVien {
     public  Date NgayVaoLam;
     public  String GhiChu;
     public  boolean GioiTinh;
-    public  String TrangThai;
-    public  int ChucVu;
+    public  boolean TrangThai;
+    public  boolean ChucVu;
+    public  String Hinh;
 
     public NhanVien() {
     }
 
-    public NhanVien(String MaNV, String TenNV, String Email, String SDT, String MatKhau, Date NgayVaoLam, String GhiChu, boolean GioiTinh, String TrangThai, int ChucVu) {
+    public NhanVien(String MaNV, String TenNV, String Email, String SDT, String MatKhau, Date NgayVaoLam, String GhiChu, boolean GioiTinh, boolean TrangThai, boolean ChucVu, String Hinh) {
         this.MaNV = MaNV;
         this.TenNV = TenNV;
         this.Email = Email;
@@ -32,6 +33,7 @@ public class NhanVien {
         this.GioiTinh = GioiTinh;
         this.TrangThai = TrangThai;
         this.ChucVu = ChucVu;
+        this.Hinh = Hinh;
     }
 
     public String getMaNV() {
@@ -98,21 +100,34 @@ public class NhanVien {
         this.GioiTinh = GioiTinh;
     }
 
-    public String getTrangThai() {
+    public boolean isTrangThai() {
         return TrangThai;
     }
 
-    public void setTrangThai(String TrangThai) {
+    public void setTrangThai(boolean TrangThai) {
         this.TrangThai = TrangThai;
     }
 
-    public int getChucVu() {
+    public boolean isChucVu() {
         return ChucVu;
     }
 
-    public void setChucVu(int ChucVu) {
+    public void setChucVu(boolean ChucVu) {
         this.ChucVu = ChucVu;
     }
+
+    public String getHinh() {
+        return Hinh;
+    }
+
+    public void setHinh(String Hinh) {
+        this.Hinh = Hinh;
+    }
+
+
+
+
+   
     
     
 }

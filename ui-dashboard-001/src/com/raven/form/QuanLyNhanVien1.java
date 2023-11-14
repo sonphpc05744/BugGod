@@ -36,7 +36,7 @@ public class QuanLyNhanVien1 extends javax.swing.JPanel {
                 Object[] row = {
                     nv.getMaNV(),
                     nv.getTenNV(),
-                    nv.getChucVu()
+                    nv.isChucVu()?"Quản lý":"Thu ngân"
                 };
                 model.addRow(row);// thêm một hàng vào table
             }

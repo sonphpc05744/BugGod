@@ -5,6 +5,7 @@
 package com.raven.form;
 
 import PeachCoffe.entity.SanPham;
+import PeachCoffee.DAO.SanPhamDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,13 +20,15 @@ public class QuanLySanPham1 extends javax.swing.JPanel {
      */
     public QuanLySanPham1() {
         initComponents();
+        init();
     }
-    
-    void init(){
-        
+
+    void init() {
+        fillTable();
     }
-    
-            void fillTable(){
+    SanPhamDao daosp = new SanPhamDao();
+
+    void fillTable() {
         DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
         model.setRowCount(0);
         try {
@@ -35,12 +38,13 @@ public class QuanLySanPham1 extends javax.swing.JPanel {
                     nv.getMaSP(),
                     nv.getTenSP(),
                     nv.getGia(),
-                    nv.getMaLSP()
+                    nv.getMaLSP(),
+                    nv.isTrangThai() ? "Đang bán" : "Dừng bán"
                 };
                 model.addRow(row);// thêm một hàng vào table
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
             //MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
         }
     }
