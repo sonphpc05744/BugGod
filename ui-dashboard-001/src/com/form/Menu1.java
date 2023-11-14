@@ -5,7 +5,7 @@
 package com.form;
 
 import com.component.Item;
-import com.raven.event.EventItem;
+import com.event.EventItem;
 import com.model.ModelItem;
 import com.swing.ScrollBar;
 import java.awt.Component;

@@ -1,6 +1,6 @@
 package com.swing;
 
-import com.raven.event.EventMenuSelected;
+import com.event.EventMenuSelected;
 import com.model.Model_Menu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;

@@ -1,4 +1,4 @@
-package com.raven.event;
+package com.event;
 
 import com.model.ModelItem;
 import java.awt.Component;

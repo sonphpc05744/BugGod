@@ -5,8 +5,8 @@
  */
 package com.main;
 
-import com.raven.event.EventItem;
-import com.raven.event.EventMenuSelected;
+import com.event.EventItem;
+import com.event.EventMenuSelected;
 import com.form.ChiTieu1;
 import com.form.Form_1;
 import com.form.Form_2;
