@@ -1,6 +1,6 @@
 package com.raven.event;
 
-import com.raven.model.ModelItem;
+import com.model.ModelItem;
 import java.awt.Component;
 
 public interface EventItem {
