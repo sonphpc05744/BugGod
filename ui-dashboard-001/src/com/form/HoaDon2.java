@@ -4,17 +4,26 @@
  */
 package com.form;
 
+import com.dao.HoaDonDAO;
+import com.model.HoaDon;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author HP
  */
 public class HoaDon2 extends javax.swing.JPanel {
 
+    HoaDonDAO hddao = new HoaDonDAO();
+    String nguoiTao = "";
+
     /**
      * Creates new form HoaDon2
      */
     public HoaDon2() {
         initComponents();
+        init();
     }
 
     /**
@@ -33,11 +42,11 @@ public class HoaDon2 extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblHoaDon = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblHDCT = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -52,7 +61,7 @@ public class HoaDon2 extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblLSHD = new javax.swing.JTable();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -86,7 +95,7 @@ public class HoaDon2 extends javax.swing.JPanel {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Xác Nhận Hóa Đơn");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -97,7 +106,7 @@ public class HoaDon2 extends javax.swing.JPanel {
                 "Mã HĐ", "Người Tạo", "Thời Gian Tạo", "Tổng Tiền", "Ghi Chú"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblHoaDon);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -138,7 +147,7 @@ public class HoaDon2 extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("HÓA ĐƠN CHI TIẾT");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblHDCT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -149,7 +158,7 @@ public class HoaDon2 extends javax.swing.JPanel {
                 "Tên SP", "Đơn Giá", "Số Lượng", "Thành Tiền", "Ghi Chú"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblHDCT);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("THÔNG TIN CHI TIẾT");
@@ -268,7 +277,7 @@ public class HoaDon2 extends javax.swing.JPanel {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel14.setText("LỊCH SỬ HÓA ĐƠN");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblLSHD.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -279,7 +288,7 @@ public class HoaDon2 extends javax.swing.JPanel {
                 "Mã HĐ", "Người Tạo", "Thời Gian Tạo", "Thời Gian Thanh Toán", "Tổng Tiền", "Trạng Thái"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(tblLSHD);
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setText("Trạng thái:");
@@ -442,8 +451,88 @@ public class HoaDon2 extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable tblHDCT;
+    private javax.swing.JTable tblHoaDon;
+    private javax.swing.JTable tblLSHD;
     // End of variables declaration//GEN-END:variables
+public void init() {
+        fillToTable();
+        fillToTableHDCT();
+        fillToTableLSHD();
+    }
+
+    public void fillToTable() {
+        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
+        model.setRowCount(0);
+        try {
+            List<HoaDon> list = hddao.selectAll();
+//            System.out.println("" + list);
+            for (HoaDon hoaDon : list) {
+//                nguoiTao = String.valueOf(hoaDon.getTenNV()+"("+hoaDon.getMaNV()+")");
+                if (hoaDon.getTrangThai().equals("Đang xử lý")) {
+                    Object[] row = {
+                        hoaDon.getMaHD(),
+                        hoaDon.getTenNV(),
+                        hoaDon.getThoiGianTao(),
+                        hoaDon.getTongTien(),
+                        hoaDon.getGhiChu()
+                    };
+                    model.addRow(row);
+                    System.out.println("" + row);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void fillToTableHDCT() {
+        DefaultTableModel model = (DefaultTableModel) tblHDCT.getModel();
+        model.setRowCount(0);
+        try {
+            List<HoaDon> list = hddao.selectAll();
+            System.out.println("" + list);
+            for (HoaDon hoaDon : list) {
+                if (hoaDon.getTrangThai().equals("Đã xử lý")) {
+                    
+                    Object[] row = {
+                        hoaDon.getMaSP() ,
+                        hoaDon.getTenNV(),
+                        hoaDon.getThoiGianTao(),
+                        hoaDon.getTongTien(),
+                        hoaDon.getGhiChu()
+                    };
+                    model.addRow(row);
+                    System.out.println("" + row);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void fillToTableLSHD() {
+        DefaultTableModel model = (DefaultTableModel) tblLSHD.getModel();
+        model.setRowCount(0);
+        try {
+            List<HoaDon> list = hddao.selectAll();
+            System.out.println("" + list);
+            for (HoaDon hoaDon : list) {
+//                nguoiTao = String.valueOf(hoaDon.getTenNV()+"("+hoaDon.getMaNV()+")");
+                if (hoaDon.getTrangThai().equals("Đã xử lý") || hoaDon.getTrangThai().equals("Đã hủy")) {
+                    Object[] row = {
+                        hoaDon.getMaHD(),
+                        hoaDon.getTenNV(),
+                        hoaDon.getThoiGianTao(),
+                        hoaDon.getTongTien(),
+                        hoaDon.getGhiChu()
+                    };
+                    model.addRow(row);
+                    System.out.println("" + row);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

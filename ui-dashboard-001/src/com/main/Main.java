@@ -8,10 +8,6 @@ package com.main;
 import com.event.EventItem;
 import com.event.EventMenuSelected;
 import com.form.ChiTieu1;
-import com.form.Form_1;
-import com.form.Form_2;
-import com.form.Form_3;
-import com.form.Form_Home;
 import com.form.HoaDon2;
 import com.form.KhuyenMai1;
 import com.form.Menu1;
@@ -23,11 +19,9 @@ import com.model.ModelItem;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 
 /**
  *
