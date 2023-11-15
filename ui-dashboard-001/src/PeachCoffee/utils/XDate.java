@@ -23,8 +23,7 @@ public class XDate {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        
-        
+  
     }
     
     public static String toString(Date date, String pattern){
@@ -36,4 +35,19 @@ public class XDate {
         date.setTime(date.getTime()+days*24*60*60*1000);
         return date;
     }
+    
+//    public static Date toDate(String date, String... pattern) {
+//        try {
+//            if (pattern.length > 0) {
+//                DATE_FORMATER.applyPattern(pattern[0]);
+//            }
+//            if (date == null) {
+//                return XDate.now();
+//            }
+//            return DATE_FORMATER.parse(date);
+//        } catch (ParseException ex) {
+//            throw new RuntimeException(ex);
+//        }
+//    }
+
 }

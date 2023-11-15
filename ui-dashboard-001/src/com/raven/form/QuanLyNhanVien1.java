@@ -24,27 +24,9 @@ public class QuanLyNhanVien1 extends javax.swing.JPanel {
     }
 
     void init() {
-        fillTable();
+        
     }
-    NhanVienDao daonv = new NhanVienDao();
-    void fillTable() {
-        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
-        model.setRowCount(0);
-        try {
-            List<NhanVien> list = daonv.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
-            for (NhanVien nv : list) {
-                Object[] row = {
-                    nv.getMaNV(),
-                    nv.getTenNV(),
-                    nv.isChucVu()?"Quản lý":"Thu ngân"
-                };
-                model.addRow(row);// thêm một hàng vào table
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            //MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
-        }
-    }
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.

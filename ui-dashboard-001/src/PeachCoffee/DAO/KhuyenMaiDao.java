@@ -18,6 +18,11 @@ public class KhuyenMaiDao extends PeachCoffeeDAO<KhuyenMai, String> {
 
     String SELECT_ALL_SQL = "Select * from KhuyenMai";
     final String SELECT_BY_ID_SQL = "SELECT * from KhuyenMai where MaKM = ?";
+    String INSERT_SQL = "INSERT INTO KhuyenMai (MaKM, TenKM, NgayBD, NgayKT, GiaKM, GhiChu, TrangThai, LoaiKM) \n"
+            + "	VALUES (?,?,?,?,?,?,?,?)";
+    String UPDATE_SQL = "UPDATE [dbo].[KhuyenMai]\n"
+            + "SET TenKM = ?,[NgayBD] =?,[NgayKT] =?,[GiaKM] =?,[GhiChu] = ?,[TrangThai] = ? ,[LoaiKM] = ? WHERE [MaKM] = ? ";
+    final String DELETE_SQL = "delete from KhuyenMai where MaKM = ?";
 
     public List<KhuyenMai> selectByKeyword(String keyword) {
         String sql = "SELECT * FROM KhuyenMai WHERE TenKM LIKE ?";
@@ -26,17 +31,20 @@ public class KhuyenMaiDao extends PeachCoffeeDAO<KhuyenMai, String> {
 
     @Override
     public void insert(KhuyenMai entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JdbcHelper.update(INSERT_SQL, entity.getMaKM(), entity.getTenKM(), entity.getNgayBD(), entity.getNgayKT(), entity.getGiaKM(), entity.getGhiChu(), entity.isTrangThai(), entity.isLoaiKM());
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void update(KhuyenMai entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JdbcHelper.update(UPDATE_SQL, entity.getTenKM(), entity.getNgayBD(), entity.getNgayKT(), entity.getGiaKM(), entity.getGhiChu(), entity.isTrangThai(), entity.isLoaiKM(), entity.getMaKM());
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JdbcHelper.update(DELETE_SQL, id);
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
@@ -93,4 +101,35 @@ public class KhuyenMaiDao extends PeachCoffeeDAO<KhuyenMai, String> {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    public List<Boolean> selectKM() {
+        String sql = "select distinct LoaiKM from KhuyenMai";
+
+        List<Boolean> list = new ArrayList<>();
+        try {
+            ResultSet rs = JdbcHelper.query(sql);
+            while (rs.next()) {
+                list.add(rs.getBoolean("LoaiKM"));
+            }
+            return list;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
+    }
+     public List<Boolean> selectLoaiSP() {
+        String sql = "select distinct TrangThai from KhuyenMai";
+
+        List<Boolean> list = new ArrayList<>();
+        try {
+            ResultSet rs = JdbcHelper.query(sql);
+            while (rs.next()) {
+                list.add(rs.getBoolean("TrangThai"));
+            }
+            return list;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+     }
+      
+     
 }

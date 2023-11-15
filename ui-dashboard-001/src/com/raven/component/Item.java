@@ -37,8 +37,7 @@ public class Item extends javax.swing.JPanel {
         this.data = data;
         pic.setImage(data.getImage());
         lbItemName.setText(data.getItemName());
-//        lbDescription.setText(data.getDescription());
-//        lbBrand.setText(data.getBrandName());
+
         DecimalFormat df = new DecimalFormat("$#,##0.00");
         lbPrice.setText(df.format(data.getPrice()));
     }

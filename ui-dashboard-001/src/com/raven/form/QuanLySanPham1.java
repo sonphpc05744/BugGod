@@ -24,30 +24,11 @@ public class QuanLySanPham1 extends javax.swing.JPanel {
     }
 
     void init() {
-        fillTable();
+      
     }
     SanPhamDao daosp = new SanPhamDao();
 
-    void fillTable() {
-        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
-        model.setRowCount(0);
-        try {
-            List<SanPham> list = daosp.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
-            for (SanPham nv : list) {
-                Object[] row = {
-                    nv.getMaSP(),
-                    nv.getTenSP(),
-                    nv.getGia(),
-                    nv.getMaLSP(),
-                    nv.isTrangThai() ? "Đang bán" : "Dừng bán"
-                };
-                model.addRow(row);// thêm một hàng vào table
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            //MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
-        }
-    }
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.

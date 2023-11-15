@@ -27,59 +27,10 @@ public class CaLam1 extends javax.swing.JPanel {
     }
 
     void init() {
-        fillTableCLV();
-        fillTableCaLam();
-    }
-    CaLamViecDao daoclv = new CaLamViecDao();
-    CaLamDao daocl = new CaLamDao();
-
-    void fillTableCLV() {
-        DefaultTableModel model = (DefaultTableModel) tblCaLamViec.getModel();
-        model.setRowCount(0);
-        try {
-            List<CaLamViec> list = daoclv.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
-
-            for (int i = 0; i < list.size(); i++) {
-                CaLamViec clv = list.get(i);
-                // NhanVien nv = new NhanVien();
-
-                 Object[] row = {
-                    i + 1,
-                    clv.getNhanVienTrucCa(),
-                    clv.isTrangThai() ? "Đang làm việc" : "Đã nghỉ",
-                    clv.getGhiChu()
-
-                };
-                model.addRow(row);// thêm một hàng vào table
-            }
-        } catch (Exception e) {
-            //e.printStackTrace(); 
-            MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
-        }
     }
 
-    void fillTableCaLam() {
-        DefaultTableModel model = (DefaultTableModel) tblCaLam.getModel();
-        model.setRowCount(0);
-        try {
-            List<CaLam> list1 = daocl.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
 
-            for (CaLam cl : list1) {
 
-                Object[] row = {
-                    cl.getMaCa(),
-                    cl.getMaNV(),
-                    cl.isTrangThai() ? "Đang hoạt đọng" : "Chưa hoạt động",
-                    cl.getGhiChu()
-                };
-                model.addRow(row);// thêm một hàng vào table
-            }
-
-        } catch (Exception e) {
-            //e.printStackTrace(); 
-            MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
