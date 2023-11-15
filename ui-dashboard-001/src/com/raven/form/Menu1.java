@@ -4,6 +4,8 @@
  */
 package com.raven.form;
 
+import com.Dao.sanPhamDao;
+import com.model.SanPham;
 import com.raven.component.Item;
 import com.raven.event.EventItem;
 import com.raven.model.ModelItem;
@@ -12,6 +14,8 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
 /**
@@ -19,7 +23,7 @@ import javax.swing.SwingUtilities;
  * @author HP
  */
 public class Menu1 extends javax.swing.JPanel {
-
+    sanPhamDao spDao = new sanPhamDao();
     /**
      * Creates new form Menu1
      */
@@ -48,7 +52,12 @@ public class Menu1 extends javax.swing.JPanel {
         panelItem1.repaint();
         panelItem1.revalidate();
     }
-
+    public void ResetItem(){
+        List<SanPham>listsp = spDao.selectAll();     
+        for(SanPham sp : listsp){
+           panelItem1.removeAll();
+        }
+    }
     public void setSelected(Component item) {
         for (Component com : panelItem1.getComponents()) {
             Item i = (Item) com;
@@ -90,6 +99,7 @@ public class Menu1 extends javax.swing.JPanel {
         jButton5 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
+        btnReset = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -153,6 +163,13 @@ public class Menu1 extends javax.swing.JPanel {
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Loại sản phẩm");
 
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -163,9 +180,11 @@ public class Menu1 extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5))
+                        .addComponent(jButton5)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnReset))
                     .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 339, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 249, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
@@ -180,7 +199,8 @@ public class Menu1 extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                            .addComponent(jTextField7))
+                            .addComponent(jTextField7)
+                            .addComponent(btnReset))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel14)
@@ -464,8 +484,14 @@ public class Menu1 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        ResetItem();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnResetActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
