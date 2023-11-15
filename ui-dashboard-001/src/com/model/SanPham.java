@@ -13,11 +13,11 @@ public class SanPham {
     private String maSP;
     private String tenSP;
     private String hinh;
-    private String gia;
+    private Double gia;
     private String ghiChu;
     private String loaiSP;
     private String khuyenMai;
-    private String trangThai;
+    private boolean trangThai;
 
     public SanPham() {
     }
@@ -33,7 +33,7 @@ public class SanPham {
         return sp.getMaSP().equals(this.getMaSP());
     }
 
-    public SanPham(String maSP, String tenSP, String hinh, String gia, String ghiChu, String loaiSP, String khuyenMai, String trangThai) {
+    public SanPham(String maSP, String tenSP, String hinh, Double gia, String ghiChu, String loaiSP, String khuyenMai, boolean trangThai) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.hinh = hinh;
@@ -44,7 +44,8 @@ public class SanPham {
         this.trangThai = trangThai;
     }
 
-    public String getMaSP() {
+    
+   public String getMaSP() {
         return maSP;
     }
 
@@ -68,11 +69,11 @@ public class SanPham {
         this.hinh = hinh;
     }
 
-    public String getGia() {
+    public Double getGia() {
         return gia;
     }
 
-    public void setGia(String gia) {
+    public void setGia(Double gia) {
         this.gia = gia;
     }
 
@@ -100,12 +101,14 @@ public class SanPham {
         this.khuyenMai = khuyenMai;
     }
 
-    public String getTrangThai() {
+    public boolean isTrangThai() {
         return trangThai;
     }
 
-    public void setTrangThai(String trangThai) {
+    public void setTrangThai(boolean trangThai) {
         this.trangThai = trangThai;
     }
 
+   
+    
 }
