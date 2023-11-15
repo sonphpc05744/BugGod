@@ -5,6 +5,8 @@
  */
 package com.raven.main;
 
+import com.Dao.sanPhamDao;
+import com.model.SanPham;
 import com.raven.event.EventItem;
 import com.raven.event.EventMenuSelected;
 import com.raven.form.ChiTieu1;
@@ -22,6 +24,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -31,7 +34,7 @@ import javax.swing.JOptionPane;
  * @author RAVEN
  */
 public class Main extends javax.swing.JFrame {
-
+    sanPhamDao spDao = new sanPhamDao();
     /**
      * Creates new form Main
      */
@@ -121,14 +124,18 @@ public class Main extends javax.swing.JFrame {
             }
         });
         int ID = 1;
-        for (int i = 0; i <= 5; i++) {
+        List<SanPham>listsp = spDao.selectAll();
+        for(SanPham sp : listsp){
             form1.addItem(new ModelItem(ID++, "4DFWD PULSE", "This product is excluded from all promotional discounts and offers.", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img1.png"))));
-            form1.addItem(new ModelItem(ID++, "FORUM MID", "This product is excluded from all promotional discounts and offers.", 100, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img2.png"))));
-            form1.addItem(new ModelItem(ID++, "SUPERNOVA", "NMD City Stock 2", 150, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img3.png"))));
-            form1.addItem(new ModelItem(ID++, "Adidas", "NMD City Stock 2", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img4.png"))));
-            form1.addItem(new ModelItem(ID++, "Adidas", "NMD City Stock 2", 120, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img5.png"))));
-            form1.addItem(new ModelItem(ID++, "4DFWD PULSE", "This product is excluded from all promotional discounts and offers.", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img6.png"))));
         }
+        
+//        for (int i = 0; i <= 5; i++) {    
+//            form1.addItem(new ModelItem(ID++, "FORUM MID", "This product is excluded from all promotional discounts and offers.", 100, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img2.png"))));
+//            form1.addItem(new ModelItem(ID++, "SUPERNOVA", "NMD City Stock 2", 150, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img3.png"))));
+//            form1.addItem(new ModelItem(ID++, "Adidas", "NMD City Stock 2", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img4.png"))));
+//            form1.addItem(new ModelItem(ID++, "Adidas", "NMD City Stock 2", 120, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img5.png"))));
+//            form1.addItem(new ModelItem(ID++, "4DFWD PULSE", "This product is excluded from all promotional discounts and offers.", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img6.png"))));
+//        }
     }
 
     private Point getLocationOf(Component com) {
