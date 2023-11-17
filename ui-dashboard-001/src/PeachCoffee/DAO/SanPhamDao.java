@@ -4,6 +4,7 @@
  */
 package PeachCoffee.DAO;
 
+import PeachCoffe.entity.KhuyenMai;
 import PeachCoffe.entity.NhanVien;
 import PeachCoffe.entity.SanPham;
 import PeachCoffee.utils.JdbcHelper;
@@ -18,10 +19,20 @@ import java.util.List;
 public class SanPhamDao extends PeachCoffeeDAO<SanPham, String> {
 
     String SELECT_ALL_SQL = "Select * from SanPham";
-    public  List<SanPham> selectByKeyword(String keyword){
-        String sql ="SELECT * FROM SanPham WHERE TenSP LIKE ?";
-        return this.selectBySql(sql, "%"+keyword+"%");
+
+    public List<SanPham> selectByKeyword(String keyword) {
+        String sql = "SELECT * FROM SanPham WHERE TenSP LIKE ?";
+        return this.selectBySql(sql, "%" + keyword + "%");
     }
+
+    public List<SanPham> selectLoaiSP(String number) {
+        String sql = "select * from SanPham\n"
+                + "inner join LoaiSanPham on LoaiSanPham.MaLSP = SanPham.MaLSP\n"
+                + "where TenLSP like N'%" + number + "%'";
+
+        return this.selectBySql(sql, number);
+    }
+
     @Override
     public void insert(SanPham entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -57,14 +68,14 @@ public class SanPhamDao extends PeachCoffeeDAO<SanPham, String> {
                 SanPham entiny = new SanPham();
                 entiny.setMaSP(rs.getString("MaSP"));
                 entiny.setTenSP(rs.getString("TenSP"));
-                entiny.setSoluong(rs.getInt(3));
+
                 entiny.setHinhAnh(rs.getString("HinhAnh"));
                 entiny.setGia(rs.getFloat("Gia"));
                 entiny.setGhiChu(rs.getString("GhiChu"));
-                
+
                 entiny.setMaLSP(rs.getString("MaLSP"));
                 entiny.setMaKM(rs.getString("MaKM"));
-
+                entiny.setTrangThai(rs.getBoolean("TrangThai"));
                 list.add(entiny);
             }
         } catch (Exception e) {

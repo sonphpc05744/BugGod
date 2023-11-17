@@ -29,6 +29,13 @@ public class KhuyenMaiDao extends PeachCoffeeDAO<KhuyenMai, String> {
         return this.selectBySql(sql, "%" + keyword + "%");
     }
 
+    public List<KhuyenMai> selectLoaiKM(Integer number) {
+        String sql = "SELECT * FROM KhuyenMai WHERE LoaiKM LIKE ?";
+        return this.selectBySql(sql, number);
+    }
+     
+
+
     @Override
     public void insert(KhuyenMai entity) {
         JdbcHelper.update(INSERT_SQL, entity.getMaKM(), entity.getTenKM(), entity.getNgayBD(), entity.getNgayKT(), entity.getGiaKM(), entity.getGhiChu(), entity.isTrangThai(), entity.isLoaiKM());
@@ -114,9 +121,10 @@ public class KhuyenMaiDao extends PeachCoffeeDAO<KhuyenMai, String> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
+
     }
-     public List<Boolean> selectLoaiSP() {
+
+    public List<Boolean> selectLoaiSP() {
         String sql = "select distinct TrangThai from KhuyenMai";
 
         List<Boolean> list = new ArrayList<>();
@@ -129,7 +137,7 @@ public class KhuyenMaiDao extends PeachCoffeeDAO<KhuyenMai, String> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-     }
-      
-     
+    }
+    
+
 }
