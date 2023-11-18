@@ -19,14 +19,15 @@ public class JDBC {
     public static Connection conn = null; // Kết nối với sql
     public static PreparedStatement ps = null; // Câu lệnh SQL được biên dịch trước
     public static ResultSet rs = null; // Trả về kết quả truy vấn
-    
+
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     public static final String connectionUrl = "jdbc:sqlserver://localhost:1433;"
-                    + "databaseName=Peach_Coffee;"
-                    + "user=sa;"
-                    + "password=123;"
-                    + "encrypt=true;"
-                    + "trustServerCertificate=true;";
+            + "databaseName=Peach_Coffee;"
+            + "user=sa;"
+            + "password=123;"
+            + "encrypt=true;"
+            + "trustServerCertificate=true;";
+
     /*
      * Nạp driver
      */
@@ -65,18 +66,14 @@ public class JDBC {
      *
      */
     public static void update(String sql, Object... args) {
-        try {
-            ps = JDBC.getStmt(sql, args);
-            try {
-                ps.executeUpdate();
-            } finally {
-                ps.getConnection().close();
-            }
+        try (PreparedStatement ps = JDBC.getStmt(sql, args)) {
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
+
 
     /*
      * Thực hiện câu lệnh SQL truy vấn (SELECT) hoặc thủ tục lưu truy vấn dữ liệu
