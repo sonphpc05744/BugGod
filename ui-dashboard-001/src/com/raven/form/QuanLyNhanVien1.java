@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author HP
  */
 public class QuanLyNhanVien1 extends javax.swing.JPanel {
+
     JFileChooser fileChooser = new JFileChooser();
     nhanVienDao nvDao = new nhanVienDao();
     int row = -1;
@@ -30,6 +31,7 @@ public class QuanLyNhanVien1 extends javax.swing.JPanel {
      */
     public QuanLyNhanVien1() {
         initComponents();
+        init();
     }
 
     /**
@@ -470,7 +472,7 @@ public void init() {
             for (NhanVien nv : list) {
                 Object[] row = {
                     nv.getMaNV(),
-                    XAuth.user.isChuVu() ? nv.getMatKhau() : hidePass(nv.getMatKhau()),
+                    //   XAuth.user.isChuVu() ? nv.getMatKhau() : hidePass(nv.getMatKhau()),
                     hidePass(nv.getMatKhau()),
                     nv.getTenNV(),
                     nv.isChuVu() ? "Trưởng phòng" : "Nhân viên",};
@@ -576,19 +578,26 @@ public void init() {
         }
         nv.setGioiTinh(GioiTinh);
         boolean ChucVu;
-        if (cboVaiTro.getSelectedIndex() == 1) {
-            ChucVu = true;
+        int vaiTroIndex = cboVaiTro.getSelectedIndex();
+        if (vaiTroIndex == 1) {
+            ChucVu = true; // Quản lý
+        } else if (vaiTroIndex == 2) {
+            ChucVu = false; // Thu ngân
         } else {
-            ChucVu = false;
+            ChucVu = false; // Hoặc giá trị mặc định khác nếu cần
         }
         nv.setChuVu(ChucVu);
+
         boolean TrangThai;
-        if (cboTrangThai.getSelectedIndex() == 0) {
-            TrangThai = true;
+        int trangThaiIndex = cboTrangThai.getSelectedIndex();
+        if (trangThaiIndex == 1) {
+            TrangThai = true; // Đang làm
+        } else if (trangThaiIndex == 2) {
+            TrangThai = false; // Nghỉ làm
         } else {
-            TrangThai = false;
+            TrangThai = false; // Hoặc giá trị mặc định khác nếu cần
         }
-        nv.setChuVu(TrangThai);
+        nv.setTrangThai(TrangThai);
         nv.setHinh(lblHinh.getToolTipText());
         return nv;
     }
@@ -596,15 +605,15 @@ public void init() {
     private void setForm(NhanVien nv) {
         txtMaNV.setText(nv.getMaNV());
         txtTenNV.setText(nv.getTenNV());
-        if (nv.isChuVu() == true) {
-            cboVaiTro.setSelectedIndex(0);
+        if (nv.isChuVu()) {
+            cboVaiTro.setSelectedIndex(1); // Quản lý
         } else {
-            cboVaiTro.setSelectedIndex(1);
+            cboVaiTro.setSelectedIndex(2); // Thu ngân
         }
-        if (nv.isTrangThai() == true) {
-            cboTrangThai.setSelectedIndex(0);
+        if (nv.isTrangThai()) {
+            cboTrangThai.setSelectedIndex(1); // Đang làm
         } else {
-            cboTrangThai.setSelectedIndex(1);
+            cboTrangThai.setSelectedIndex(2); // Nghỉ làm
         }
         txtPass.setText(nv.getMatKhau());
         if (nv.isGioiTinh() == true) {
@@ -646,6 +655,8 @@ public void init() {
         this.setForm(nv);
         this.row = -1;
         this.updateStatus();
+        cboTrangThai.setSelectedIndex(0);
+        cboVaiTro.setSelectedIndex(0);
         btngGioiTinh.clearSelection();
 
     }

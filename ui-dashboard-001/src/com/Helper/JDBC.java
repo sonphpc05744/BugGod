@@ -19,15 +19,14 @@ public class JDBC {
     public static Connection conn = null; // Kết nối với sql
     public static PreparedStatement ps = null; // Câu lệnh SQL được biên dịch trước
     public static ResultSet rs = null; // Trả về kết quả truy vấn
-
+    
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     public static final String connectionUrl = "jdbc:sqlserver://localhost:1433;"
-            + "databaseName=Peach_Coffee;"
-            + "user=sa;"
-            + "password=123456;"
-            + "encrypt=true;"
-            + "trustServerCertificate=true;";
-
+                    + "databaseName=Peach_Coffee;"
+                    + "user=sa;"
+                    + "password=123;"
+                    + "encrypt=true;"
+                    + "trustServerCertificate=true;";
     /*
      * Nạp driver
      */
