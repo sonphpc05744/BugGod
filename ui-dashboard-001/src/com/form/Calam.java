@@ -37,7 +37,6 @@ public class Calam extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnHuy = new javax.swing.JButton();
-        btnSua = new javax.swing.JButton();
         btnXacNhan = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -92,17 +91,12 @@ public class Calam extends javax.swing.JDialog {
                 btnHuyActionPerformed(evt);
             }
         });
-        jPanel2.add(btnHuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, 91, 34));
-
-        btnSua.setBackground(new java.awt.Color(252, 255, 204));
-        btnSua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnSua.setText("Cập nhật");
-        jPanel2.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 340, 91, 34));
+        jPanel2.add(btnHuy, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 91, 34));
 
         btnXacNhan.setBackground(new java.awt.Color(209, 255, 204));
         btnXacNhan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXacNhan.setText("Xác nhận");
-        jPanel2.add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 340, 100, 34));
+        jPanel2.add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, 100, 34));
 
         jRadioButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jRadioButton1.setText("Có mặt");
@@ -245,7 +239,6 @@ public class Calam extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuy;
-    private javax.swing.JButton btnSua;
     private javax.swing.JButton btnXacNhan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
