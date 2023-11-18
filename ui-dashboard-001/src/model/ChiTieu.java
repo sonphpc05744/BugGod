@@ -14,6 +14,7 @@ public class ChiTieu {
     private int MaHD;
     private String MaNV;
     private String TenNV;
+    private double Tien;
     private Date ThoiGian;
     private boolean TrangThai;
     private String GhiChu;
@@ -21,10 +22,11 @@ public class ChiTieu {
     public ChiTieu() {
     }
 
-    public ChiTieu(int MaHD, String MaNV, String TenNV, Date ThoiGian, boolean TrangThai, String GhiChu) {
+    public ChiTieu(int MaHD, String MaNV, String TenNV, double Tien, Date ThoiGian, boolean TrangThai, String GhiChu) {
         this.MaHD = MaHD;
         this.MaNV = MaNV;
         this.TenNV = TenNV;
+        this.Tien = Tien;
         this.ThoiGian = ThoiGian;
         this.TrangThai = TrangThai;
         this.GhiChu = GhiChu;
@@ -54,6 +56,14 @@ public class ChiTieu {
         this.TenNV = TenNV;
     }
 
+    public double getTien() {
+        return Tien;
+    }
+
+    public void setTien(double Tien) {
+        this.Tien = Tien;
+    }
+
     public Date getThoiGian() {
         return ThoiGian;
     }
@@ -77,6 +87,8 @@ public class ChiTieu {
     public void setGhiChu(String GhiChu) {
         this.GhiChu = GhiChu;
     }
+
+   
     
     
 }

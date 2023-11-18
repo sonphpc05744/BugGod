@@ -4,19 +4,50 @@
  */
 package com.form;
 
+import Dao.ChiTieuDao;
+import model.ChiTieu;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author HP
  */
 public class ChiTieu1 extends javax.swing.JPanel {
 
+    ChiTieuDao CTD = new ChiTieuDao();
+    int row = -1;
+    
     /**
      * Creates new form ChiTieu1
      */
     public ChiTieu1() {
         initComponents();
+        init();
+    }
+    
+    public void init(){
+        
     }
 
+    public void filltable(){
+        DefaultTableModel model = (DefaultTableModel) tblChiTieu.getModel();
+        model.setRowCount(0);//xóa tất cả các hàng trên bảng ghi
+        try {
+            List<ChiTieu> list = CTD.selectAll();//đọc dữ liệu từ csdl
+            for (ChiTieu CT : list) {
+                Object[] row = {
+                    CT.getTenNV(),
+                   CT.getTien(),
+                    CT.getThoiGian(),
+                    CT.getGhiChu()};
+                model.addRow(row);//thêm bảng vào table
+            }
+        } catch (Exception e) {
+            XMsgBox.alert(this, "Lỗi truy vấn dữ liệu");
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,16 +77,16 @@ public class ChiTieu1 extends javax.swing.JPanel {
         txtTenNV = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblChiTieu = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtTien = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtGhiChu = new javax.swing.JTextArea();
         btnXacNhan = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        txtNgayLay = new com.toedter.calendar.JDateChooser();
 
         setBackground(new java.awt.Color(204, 204, 255));
 
@@ -164,7 +195,7 @@ public class ChiTieu1 extends javax.swing.JPanel {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblChiTieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -175,7 +206,7 @@ public class ChiTieu1 extends javax.swing.JPanel {
                 "Tên NV", "Số tiền", "Ngày lấy", "Ghi chú"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tblChiTieu);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -208,10 +239,10 @@ public class ChiTieu1 extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Ngày lấy:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ghi chú", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
+        txtGhiChu.setColumns(20);
+        txtGhiChu.setRows(5);
+        txtGhiChu.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ghi chú", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        jScrollPane1.setViewportView(txtGhiChu);
 
         btnXacNhan.setBackground(new java.awt.Color(101, 107, 255));
         btnXacNhan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -247,7 +278,7 @@ public class ChiTieu1 extends javax.swing.JPanel {
                                 .addComponent(jLabel3)
                                 .addComponent(jScrollPane1)
                                 .addComponent(txtTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtNgayLay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(txtTien, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -272,7 +303,7 @@ public class ChiTieu1 extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNgayLay, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(79, 79, 79)
@@ -295,7 +326,7 @@ public class ChiTieu1 extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -336,7 +367,6 @@ public class ChiTieu1 extends javax.swing.JPanel {
     private javax.swing.JButton btnHUy;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnXacNhan;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -357,9 +387,10 @@ public class ChiTieu1 extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable tblChiTieu;
+    private javax.swing.JTextArea txtGhiChu;
+    private com.toedter.calendar.JDateChooser txtNgayLay;
     private javax.swing.JTextField txtTenNV;
     private javax.swing.JTextField txtTien;
     // End of variables declaration//GEN-END:variables

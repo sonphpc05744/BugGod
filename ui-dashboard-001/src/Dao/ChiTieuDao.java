@@ -7,6 +7,8 @@ package Dao;
 import Helper.JDBC;
 import com.Dao.PeachCoffeeDao;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import model.ChiTieu;
 
@@ -14,23 +16,29 @@ import model.ChiTieu;
  *
  * @author ACER
  */
-public class ChiTieuDao extends PeachCoffeeDao<ChiTieu, String>{
+public class ChiTieuDao extends PeachCoffeeDao<ChiTieu, String> {
+
     public static ResultSet rs = null; // Trả về kết quả truy vấn
     public static String INSERT_SQL = "Insert into HoaDonChi (MaNV,TienLay,ThoiGianTao,GhiChu)values (?,?,?,?)";
-    public static String UPDATE_SQL = "Update HoaDonChi set HoaDonChi = ? where MaHD = ?";  
+    public static String UPDATE_SQL = "Update HoaDonChi set HoaDonChi = ? where MaHD = ?";
     public static String SELECT_ALL_SQL = "Select * from HoaDonChi";
     public static String SELECT_BY_ID_SQL = "SELECT * FROM HoaDonChi WHERE MaHD=?";
 
     @Override
     public void insert(ChiTieu entity) {
-              JDBC.update
-                
-                
+        JDBC.update(INSERT_SQL,
+                entity.getMaNV(),
+                entity.getTenNV(),
+                entity.getTien(),
+                entity.getThoiGian(),
+                entity.getGhiChu());
     }
 
     @Override
     public void update(ChiTieu entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JDBC.update(UPDATE_SQL,
+                entity.getMaHD(),
+                entity.isTrangThai());
     }
 
     @Override
@@ -40,16 +48,42 @@ public class ChiTieuDao extends PeachCoffeeDao<ChiTieu, String>{
 
     @Override
     public List<ChiTieu> selectAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return selectBySql(SELECT_ALL_SQL);
     }
 
     @Override
     public ChiTieu selectById(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<ChiTieu> list = selectBySql(SELECT_BY_ID_SQL, key);
+        return list.size() > 0 ? list.get(0) : null;
+
     }
 
     @Override
     protected List<ChiTieu> selectBySql(String sql, Object... args) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<ChiTieu> list = new ArrayList<>();
+        try {
+            try {
+                rs = JDBC.query(sql, args);
+                while (rs.next()) {
+                    ChiTieu entity = new ChiTieu();
+                    entity.setMaHD(rs.getInt("MaHD"));
+                    entity.setMaNV(rs.getString("MaNV"));
+                    entity.setTenNV(rs.getString("TenNV"));
+                    entity.setTien(rs.getDouble("TienLay"));
+                    entity.setThoiGian(rs.getDate("ThoiGianTao"));
+                    entity.setGhiChu(rs.getString("GhiChu"));
+                    entity.setTrangThai(rs.getBoolean("TrangThai"));
+                    list.add(entity);
+                }
+            } finally {
+                if (rs != null) {
+                    rs.close();  // Đóng ResultSet khi đã xử lý xong
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+        return list;
     }
 }
