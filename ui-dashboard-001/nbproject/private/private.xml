@@ -4,9 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Fpoly_Study/DuAn1/BGOD1/BugGod/ui-dashboard-001/src/com/raven/main/Main.java</file>
-            <file>file:/D:/Fpoly_Study/DuAn1/BGOD1/BugGod/ui-dashboard-001/src/com/Dao/menuDao.java</file>
+            <file>file:/D:/Fpoly_Study/DuAn1/BGOD1/BugGod/ui-dashboard-001/src/com/Dao/hoaDonDao.java</file>
+            <file>file:/D:/Fpoly_Study/DuAn1/BGOD1/BugGod/ui-dashboard-001/src/com/raven/form/ChiTieu1.java</file>
+            <file>file:/D:/Fpoly_Study/DuAn1/BGOD1/BugGod/ui-dashboard-001/src/com/Helper/JDBC.java</file>
             <file>file:/D:/Fpoly_Study/DuAn1/BGOD1/BugGod/ui-dashboard-001/src/com/raven/form/Menu1.java</file>
-            <file>file:/D:/Fpoly_Study/DuAn1/BGOD1/BugGod/ui-dashboard-001/src/com/Dao/loaiSanPhamDao.java</file>
+            <file>file:/D:/Fpoly_Study/DuAn1/BGOD1/BugGod/ui-dashboard-001/src/com/model/SanPham.java</file>
+            <file>file:/D:/Fpoly_Study/DuAn1/BGOD1/BugGod/ui-dashboard-001/src/com/raven/component/Item.java</file>
+            <file>file:/D:/Fpoly_Study/DuAn1/BGOD1/BugGod/ui-dashboard-001/src/com/raven/form/HoaDon2.java</file>
         </group>
     </open-files>
 </project-private>

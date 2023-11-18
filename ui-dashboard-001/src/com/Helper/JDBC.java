@@ -22,7 +22,7 @@ public class JDBC {
     
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     public static final String connectionUrl = "jdbc:sqlserver://localhost:1433;"
-                    + "databaseName=Peach_Coffee;"
+                    + "databaseName=Peach_Coffee1;"
                     + "user=sa;"
                     + "password=123456;"
                     + "encrypt=true;"

@@ -34,8 +34,9 @@ import javax.swing.JOptionPane;
  * @author RAVEN
  */
 public class Main extends javax.swing.JFrame {
+
     sanPhamDao spDao = new sanPhamDao();
-    
+
     /**
      * Creates new form Main
      */
@@ -50,7 +51,7 @@ public class Main extends javax.swing.JFrame {
     private ModelItem itemSelected;
 
     public Main() {
-        
+
         initComponents();
 
         setBackground(new Color(0, 0, 0, 0));
@@ -69,7 +70,7 @@ public class Main extends javax.swing.JFrame {
             public void selected(int index) {
                 if (index == 0) {
                     setForm(home);
-                } else if (index == 1) {            
+                } else if (index == 1) {
                     setForm(form1);
                 } else if (index == 2) {
                     setForm(form2);
@@ -98,10 +99,10 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void init() {
-        mainPanel.setLayout(new BorderLayout());  
+        mainPanel.setLayout(new BorderLayout());
         testData();
         mainPanel.add(form1);
-       
+
     }
 
     public void testData() {
@@ -120,19 +121,18 @@ public class Main extends javax.swing.JFrame {
 //                    mainPanel.setImageSize(new Dimension(180, 120));
 //                    mainPanel.repaint();
                     form1.setSelected(com);
-                    
+
                     //home.showItem(item);
                     //     animator.start();
                     //    }
                 }
             }
         });
-        
-        List<SanPham>listsp = spDao.selectAll();     
-        for(SanPham sp : listsp){
-           form1.addItem(new ModelItem(sp.getMaSP(), sp.getTenSP(), sp.getGhiChu(), sp.getGia(), sp.getLoaiSP(), new ImageIcon(getClass().getResource("/com/raven/image/"+sp.getHinh()))));
-        }
-        
+
+//        List<SanPham>listsp = spDao.selectAll();     
+//        for(SanPham sp : listsp){
+//           form1.addItem(new ModelItem(sp.getMaSP(), sp.getTenSP(), sp.getGhiChu(), sp.getGia(), sp.getLoaiSP(), new ImageIcon(getClass().getResource("/com/raven/image/"+sp.getHinh()))));
+//        }
 //        String ID= "";
 //        for (int i = 0; i <= 1; i++) {    
 //            form1.addItem(new ModelItem("", "FORUM MID", "This product is excluded from all promotional discounts and offers.", 100, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img2.png"))));

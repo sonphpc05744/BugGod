@@ -4,8 +4,6 @@
  */
 package com.raven.form;
 
-import com.Dao.sanPhamDao;
-import com.model.SanPham;
 import com.raven.component.Item;
 import com.raven.event.EventItem;
 import com.raven.model.ModelItem;
@@ -14,8 +12,6 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
 /**
@@ -23,7 +19,7 @@ import javax.swing.SwingUtilities;
  * @author HP
  */
 public class Menu1 extends javax.swing.JPanel {
-    sanPhamDao spDao = new sanPhamDao();
+
     /**
      * Creates new form Menu1
      */
@@ -52,12 +48,7 @@ public class Menu1 extends javax.swing.JPanel {
         panelItem1.repaint();
         panelItem1.revalidate();
     }
-    public void ResetItem(){
-        List<SanPham>listsp = spDao.selectAll();     
-        for(SanPham sp : listsp){
-           panelItem1.removeAll();
-        }
-    }
+
     public void setSelected(Component item) {
         for (Component com : panelItem1.getComponents()) {
             Item i = (Item) com;
@@ -485,7 +476,6 @@ public class Menu1 extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        ResetItem();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnResetActionPerformed
 
