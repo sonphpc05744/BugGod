@@ -5,6 +5,8 @@
  */
 package com.raven.main;
 
+import com.Dao.sanPhamDao;
+import com.model.SanPham;
 import com.raven.event.EventItem;
 import com.raven.event.EventMenuSelected;
 import com.raven.form.ChiTieu1;
@@ -21,6 +23,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -30,7 +33,8 @@ import javax.swing.JOptionPane;
  * @author RAVEN
  */
 public class Main extends javax.swing.JFrame {
-
+    sanPhamDao spDao = new sanPhamDao();
+    
     /**
      * Creates new form Main
      */
@@ -45,7 +49,9 @@ public class Main extends javax.swing.JFrame {
     private ModelItem itemSelected;
 
     public Main() {
+        
         initComponents();
+
         setBackground(new Color(0, 0, 0, 0));
         home = new TrangChu();
         form1 = new Menu1();
@@ -55,14 +61,14 @@ public class Main extends javax.swing.JFrame {
         form5 = new ThongKe1();
         form6 = new QuanLyNhanVien1();
         form7 = new ChiTieu1();
+        init();
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
             public void selected(int index) {
                 if (index == 0) {
                     setForm(home);
-                } else if (index == 1) {
-                    init();
+                } else if (index == 1) {            
                     setForm(form1);
                 } else if (index == 2) {
                     setForm(form2);
@@ -91,12 +97,13 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void init() {
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(form1);
+        mainPanel.setLayout(new BorderLayout());  
         testData();
+        mainPanel.add(form1);
+       
     }
 
-    private void testData() {
+    public void testData() {
         form1.setEvent(new EventItem() {
             @Override
             public void itemClick(Component com, ModelItem item) {
@@ -119,15 +126,20 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         });
-        int ID = 1;
-        for (int i = 0; i <= 5; i++) {
-            form1.addItem(new ModelItem(ID++, "4DFWD PULSE", "This product is excluded from all promotional discounts and offers.", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img1.png"))));
-            form1.addItem(new ModelItem(ID++, "FORUM MID", "This product is excluded from all promotional discounts and offers.", 100, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img2.png"))));
-            form1.addItem(new ModelItem(ID++, "SUPERNOVA", "NMD City Stock 2", 150, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img3.png"))));
-            form1.addItem(new ModelItem(ID++, "Adidas", "NMD City Stock 2", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img4.png"))));
-            form1.addItem(new ModelItem(ID++, "Adidas", "NMD City Stock 2", 120, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img5.png"))));
-            form1.addItem(new ModelItem(ID++, "4DFWD PULSE", "This product is excluded from all promotional discounts and offers.", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img6.png"))));
+        
+        List<SanPham>listsp = spDao.selectAll();     
+        for(SanPham sp : listsp){
+           form1.addItem(new ModelItem(sp.getMaSP(), sp.getTenSP(), sp.getGhiChu(), sp.getGia(), sp.getLoaiSP(), new ImageIcon(getClass().getResource("/com/raven/image/"+sp.getHinh()))));
         }
+        
+//        String ID= "";
+//        for (int i = 0; i <= 1; i++) {    
+//            form1.addItem(new ModelItem("", "FORUM MID", "This product is excluded from all promotional discounts and offers.", 100, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img2.png"))));
+//            form1.addItem(new ModelItem("", "SUPERNOVA", "NMD City Stock 2", 150, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img3.png"))));
+//            form1.addItem(new ModelItem("" ,"Adidas", "NMD City Stock 2", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img4.png"))));
+//            form1.addItem(new ModelItem("", "Adidas", "NMD City Stock 2", 120, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img5.png"))));
+//            form1.addItem(new ModelItem("", "4DFWD PULSE", "This product is excluded from all promotional discounts and offers.", 160, "Adidas", new ImageIcon(getClass().getResource("/com/raven/image/img6.png"))));
+//        }
     }
 
     private Point getLocationOf(Component com) {
