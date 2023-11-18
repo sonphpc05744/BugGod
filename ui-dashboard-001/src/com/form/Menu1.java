@@ -4,14 +4,21 @@
  */
 package com.form;
 
+import com.Dao.sanPhamDao;
 import com.component.Item;
 import com.event.EventItem;
-import com.model.ModelItem;
+import com.model.SanPham;
 import com.swing.ScrollBar;
+import com.utils.MsBox;
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 /**
@@ -20,20 +27,26 @@ import javax.swing.SwingUtilities;
  */
 public class Menu1 extends javax.swing.JPanel {
 
+    List<SanPham> listSP = new ArrayList<>();
+    sanPhamDao SPDao = new sanPhamDao();
+    private SanPham itemSelected;
+
     /**
      * Creates new form Menu1
      */
     public Menu1() {
         initComponents();
-         scroll1.setVerticalScrollBar(new ScrollBar());
+        scroll1.setVerticalScrollBar(new ScrollBar());
+        loadData();
     }
-   public void setEvent(EventItem event) {
+
+    public void setEvent(EventItem event) {
         this.event = event;
     }
 
     private EventItem event;
 
-    public void addItem(ModelItem data) {
+    public void addItem(SanPham data) {
         Item item = new Item();
         item.setData(data);
         item.addMouseListener(new MouseAdapter() {
@@ -66,7 +79,6 @@ public class Menu1 extends javax.swing.JPanel {
 //        DecimalFormat df = new DecimalFormat("$#,##0.00");
 //        lbPrice.setText(df.format(data.getPrice()));
 //    }
-
     public Point getPanelItemLocation() {
         Point p = scroll1.getLocation();
         return new Point(p.x, p.y - scroll1.getViewport().getViewPosition().y);
@@ -133,7 +145,7 @@ public class Menu1 extends javax.swing.JPanel {
         panelItem1.setBackground(new java.awt.Color(204, 204, 255));
         scroll1.setViewportView(panelItem1);
 
-        jPanel5.add(scroll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 75, 580, 470));
+        jPanel5.add(scroll1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 580, 480));
 
         jPanel6.setBackground(new java.awt.Color(104, 104, 248));
 
@@ -505,4 +517,51 @@ public class Menu1 extends javax.swing.JPanel {
     private com.swing.PanelItem panelItem1;
     private javax.swing.JScrollPane scroll1;
     // End of variables declaration//GEN-END:variables
+
+    public void loadData() {
+        listSP = SPDao.selectAll();
+    }
+
+    public void testData() {
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+                System.out.println("dã rê");
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+              
+                System.out.println("đã rời");
+            }
+        });
+        setEvent(new EventItem() {
+            @Override
+            public void itemClick(Component com, SanPham item) {
+                if (itemSelected != null) {
+                    //        mainPanel.setImageOld(itemSelected.getImage());
+                }
+                if (itemSelected != item) {
+                    //         if (!animator.isRunning()) {
+                    itemSelected = item;
+                    //         animatePoint = getLocationOf(com);
+//                    mainPanel.setImage(item.getImage());
+//                    //        mainPanel.setImageLocation(animatePoint);
+//                    mainPanel.setImageSize(new Dimension(180, 120));
+//                    mainPanel.repaint();
+                    setSelected(com);
+                    JOptionPane.showMessageDialog(null, "" + item.getMaSP() + " " + item.getTenSP());
+
+                    //home.showItem(item);
+                    //     animator.start();
+                    //    }
+                }
+            }
+        });
+        for (SanPham sanPham : listSP) {
+            addItem(new SanPham(sanPham.getMaSP(), sanPham.getTenSP(), sanPham.getHinh(), sanPham.getGia(), sanPham.getGhiChu(), sanPham.getLoaiSP(), sanPham.getKhuyenMai(), sanPham.isTrangThai()));
+        }
+    }
 }

@@ -5,7 +5,6 @@
  */
 package com.main;
 
-import com.event.EventItem;
 import com.event.EventMenuSelected;
 import com.form.ChiTieu1;
 import com.form.HoaDon2;
@@ -15,12 +14,10 @@ import com.form.QuanLyNhanVien1;
 import com.form.QuanLySanPham1;
 import com.form.ThongKe1;
 import com.form.TrangChu;
-import com.model.ModelItem;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 /**
@@ -40,7 +37,6 @@ public class Main extends javax.swing.JFrame {
     private ThongKe1 form5;
     private QuanLyNhanVien1 form6;
     private ChiTieu1 form7;
-    private ModelItem itemSelected;
 
     public Main() {
         initComponents();
@@ -91,42 +87,10 @@ public class Main extends javax.swing.JFrame {
     private void init() {
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(form1);
-        testData();
+        form1.testData();
     }
 
-    private void testData() {
-        form1.setEvent(new EventItem() {
-            @Override
-            public void itemClick(Component com, ModelItem item) {
-                if (itemSelected != null) {
-                    //        mainPanel.setImageOld(itemSelected.getImage());
-                }
-                if (itemSelected != item) {
-                    //         if (!animator.isRunning()) {
-                    itemSelected = item;
-                    //         animatePoint = getLocationOf(com);
-//                    mainPanel.setImage(item.getImage());
-//                    //        mainPanel.setImageLocation(animatePoint);
-//                    mainPanel.setImageSize(new Dimension(180, 120));
-//                    mainPanel.repaint();
-                    form1.setSelected(com);
-                    
-                    //home.showItem(item);
-                    //     animator.start();
-                    //    }
-                }
-            }
-        });
-        int ID = 1;
-        for (int i = 0; i <= 5; i++) {
-            form1.addItem(new ModelItem(ID++, "4DFWD PULSE", "This product is excluded from all promotional discounts and offers.", 160, "Adidas", new ImageIcon(getClass().getResource("/com/image/img1.png"))));
-            form1.addItem(new ModelItem(ID++, "FORUM MID", "This product is excluded from all promotional discounts and offers.", 100, "Adidas", new ImageIcon(getClass().getResource("/com/image/img2.png"))));
-            form1.addItem(new ModelItem(ID++, "SUPERNOVA", "NMD City Stock 2", 150, "Adidas", new ImageIcon(getClass().getResource("/com/image/img3.png"))));
-            form1.addItem(new ModelItem(ID++, "Adidas", "NMD City Stock 2", 160, "Adidas", new ImageIcon(getClass().getResource("/com/image/img4.png"))));
-            form1.addItem(new ModelItem(ID++, "Adidas", "NMD City Stock 2", 120, "Adidas", new ImageIcon(getClass().getResource("/com/image/img5.png"))));
-            form1.addItem(new ModelItem(ID++, "4DFWD PULSE", "This product is excluded from all promotional discounts and offers.", 160, "Adidas", new ImageIcon(getClass().getResource("/com/image/img6.png"))));
-        }
-    }
+
 
     private Point getLocationOf(Component com) {
         Point p = form1.getPanelItemLocation();

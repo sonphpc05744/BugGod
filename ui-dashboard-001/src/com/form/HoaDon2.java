@@ -4,8 +4,10 @@
  */
 package com.form;
 
+import com.Dao.sanPhamDao;
 import com.dao.HoaDonDAO;
 import com.model.HoaDon;
+import com.model.SanPham;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +18,10 @@ import javax.swing.table.DefaultTableModel;
 public class HoaDon2 extends javax.swing.JPanel {
 
     HoaDonDAO hddao = new HoaDonDAO();
+    sanPhamDao spdao = new sanPhamDao();
     String nguoiTao = "";
+    String tenSP = "";
+    double dongia = 0;
 
     /**
      * Creates new form HoaDon2
@@ -399,7 +404,7 @@ public class HoaDon2 extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -491,12 +496,18 @@ public void init() {
         model.setRowCount(0);
         try {
             List<HoaDon> list = hddao.selectAll();
-            System.out.println("" + list);
+            System.out.println("" + list); 
             for (HoaDon hoaDon : list) {
                 if (hoaDon.getTrangThai().equals("Đã xử lý")) {
-                    
+                    List<SanPham> listsp = spdao.selectAll();
+                    for (SanPham sanPham : listsp) {
+                        if (hoaDon.getMaSP().equals(sanPham.getMaSP())) {
+                            tenSP = sanPham.getTenSP();
+                            dongia = sanPham.getGia();
+                        }
+                    }
                     Object[] row = {
-                        hoaDon.getMaSP() ,
+                        tenSP,
                         hoaDon.getTenNV(),
                         hoaDon.getThoiGianTao(),
                         hoaDon.getTongTien(),

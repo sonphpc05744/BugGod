@@ -1,16 +1,18 @@
 package com.component;
 
-import com.model.ModelItem;
+import com.model.SanPham;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.text.DecimalFormat;
+import javax.swing.ImageIcon;
 
 public class Item extends javax.swing.JPanel {
 
-    public ModelItem getData() {
+    public SanPham getData() {
         return data;
     }
 
@@ -31,16 +33,18 @@ public class Item extends javax.swing.JPanel {
         setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
-    private ModelItem data;
+    private SanPham data;
 
-    public void setData(ModelItem data) {
+    public void setData(SanPham data) {
         this.data = data;
-        pictureBox1.setImage(data.getImage());
-        lbItemName.setText(data.getItemName());
+        ImageIcon imgIcon = new ImageIcon(getClass().getResource("/com/icon/" + data.getHinh()));
+//        Image img = imgIcon.getImage();
+        pictureBox1.setImage(imgIcon);
+        lbItemName.setText(data.getTenSP());
 //        lbDescription.setText(data.getDescription());
 //        lbBrand.setText(data.getBrandName());
-        DecimalFormat df = new DecimalFormat("$#,##0.00");
-        lbPrice.setText(df.format(data.getPrice()));
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        lbPrice.setText(df.format(data.getGia()));
     }
 
     @Override
@@ -80,24 +84,28 @@ public class Item extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbPrice))
-                .addContainerGap(66, Short.MAX_VALUE))
+                    .addComponent(lbItemName, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                    .addComponent(lbPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(166, 166, 166)
+                .addGap(178, 178, 178)
                 .addComponent(lbItemName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbPrice)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(pictureBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 66, Short.MAX_VALUE)))
+                    .addContainerGap()
+                    .addComponent(pictureBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(59, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
