@@ -5,9 +5,9 @@
         <group>
             <file>file:/D:/Du%20an%201/BugGod/ui-dashboard-001/src/com/form/ChiTieu1.java</file>
             <file>file:/D:/Du%20an%201/BugGod/ui-dashboard-001/src/Dao/ChiTieuDao.java</file>
-            <file>file:/D:/Du%20an%201/BugGod/ui-dashboard-001/src/com/main/Main.java</file>
-            <file>file:/D:/Du%20an%201/BugGod/ui-dashboard-001/src/Helper/JDBC.java</file>
-            <file>file:/D:/Du%20an%201/BugGod/ui-dashboard-001/src/model/ChiTieu.java</file>
+            <file>file:/D:/Du%20an%201/BugGod/ui-dashboard-001/src/com/form/Calam.java</file>
+            <file>file:/D:/Du%20an%201/BugGod/ui-dashboard-001/src/Dao/CaLamDao.java</file>
+            <file>file:/D:/Du%20an%201/BugGod/ui-dashboard-001/src/model/CaLam.java</file>
         </group>
     </open-files>
 </project-private>

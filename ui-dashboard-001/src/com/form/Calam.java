@@ -4,11 +4,26 @@
  */
 package com.form;
 
+import Dao.CaLamDao;
+import com.untils.XDate;
+import com.untils.XDialog;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.CaLam;
+import model.ChiTieu;
+
 /**
  *
  * @author HP
  */
 public class Calam extends javax.swing.JDialog {
+
+    CaLamDao CLD = new CaLamDao();
+    int row = -1;
+    List<String> listmhdc = new ArrayList<>();
+    List<String> listgc = new ArrayList<>();
+    List<String> listcl = new ArrayList<>();
 
     /**
      * Creates new form Calam
@@ -17,6 +32,96 @@ public class Calam extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        init();
+    }
+
+    public void init() {
+        fillTable();
+    }
+
+    private void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
+        model.setRowCount(0);
+        listmhdc.clear();
+        listgc.clear();
+        listcl.clear();
+        try {
+            List<CaLam> list = CLD.selectAll();
+            for (CaLam CL : list) {
+                listmhdc.add(CL.getMaCa());
+                listgc.add(CL.getGhiChu());
+                listcl.add(CL.getMaCL());
+                if ("Thu ngân".equals(CL.getChucVu()) || "Phục vụ".equals(CL.getChucVu())) {
+                    Object[] row = {
+                        CL.getMaNV(),
+                        CL.getTenNV(),
+                        CL.getChucVu(),
+                        CL.isTrangThai() ? "Có mặt" : "Vắng",
+                        CL.getGhiChu()
+                    };
+                    model.addRow(row);
+                }
+            }
+        } catch (Exception e) {
+            XDialog.alert(this, "Lỗi truy vấn dữ liệu Ca làm!");
+            e.printStackTrace();
+        }
+    }
+
+    private CaLam getForm() {
+        CaLam CT = new CaLam();
+
+        if (row >= 0 && row < listcl.size()) {
+            String maCL = listmhdc.get(row);
+            String Manv = (String) tblNhanVien.getValueAt(row, 0);
+            String MaCL2 = listcl.get(row);
+            String ghichu = listgc.get(row);
+            System.out.println(""+maCL);
+            CT.setMaCa(maCL);
+            CT.setMaNV(Manv);
+            CT.setMaCL(MaCL2);
+            if (rboCoMat.isSelected()) {
+                CT.setTrangThai(true);
+            } else {
+                CT.setTrangThai(false);
+            }
+            CT.setGhiChu(ghichu);
+        }
+
+        return CT;
+    }
+
+    public void setForm(CaLam Cl) {
+        txtGhiChu.setText(Cl.getGhiChu());
+        if (Cl.isTrangThai()) {
+            rboCoMat.setSelected(true);
+        } else {
+            rboVang.setSelected(true);
+        }
+    }
+
+    private void edit() {
+        if (row >= 0 && row < listmhdc.size()) {
+            String maCl = listcl.get(row );
+            CaLam CT = CLD.selectById(maCl);
+//            System.out.println(""+CT.isTrangThai());
+            this.setForm(CT);
+        } else {
+            XDialog.alert(this, "Vui lòng chọn một hàng để chỉnh sửa.");
+        }
+    }
+
+    public void CapNhat() {
+        CaLam CT = this.getForm();
+        try {
+            System.out.println("" + CT.getMaCL() + CT.isTrangThai()+CT.getMaCa()+CT.getGhiChu());
+            CLD.update(CT);
+            this.fillTable();
+            XDialog.alert(this, "Đã xác nhận thành công!");
+        } catch (Exception e) {
+            XDialog.alert(this, "Lỗi! Không thể cập nhật");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -28,6 +133,7 @@ public class Calam extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btngTrangThai = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -35,15 +141,18 @@ public class Calam extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblNhanVien = new javax.swing.JTable();
         btnHuy = new javax.swing.JButton();
         btnXacNhan = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rboCoMat = new javax.swing.JRadioButton();
+        rboVang = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtGhiChu = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblCaLam = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -68,20 +177,25 @@ public class Calam extends javax.swing.JDialog {
         jLabel4.setText("Nhân viên phục vụ:");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 97, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblNhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "STT", "Tên NV", "Trạng thái", "Ghi chú"
+                "Mã NV", "Tên NV", "Chức vụ", "Trạng thái", "Ghi chú"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNhanVienMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblNhanVien);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 123, 537, 152));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 560, 152));
 
         btnHuy.setBackground(new java.awt.Color(255, 204, 209));
         btnHuy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -96,25 +210,42 @@ public class Calam extends javax.swing.JDialog {
         btnXacNhan.setBackground(new java.awt.Color(209, 255, 204));
         btnXacNhan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnXacNhan.setText("Xác nhận");
+        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXacNhanActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, 100, 34));
 
-        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jRadioButton1.setText("Có mặt");
-        jPanel2.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, -1));
+        btngTrangThai.add(rboCoMat);
+        rboCoMat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        rboCoMat.setText("Có mặt");
+        jPanel2.add(rboCoMat, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, -1, -1));
 
-        jRadioButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jRadioButton2.setText("Vắng");
-        jPanel2.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, -1, -1));
+        btngTrangThai.add(rboVang);
+        rboVang.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        rboVang.setText("Vắng");
+        jPanel2.add(rboVang, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Trạng thái:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, -1, -1));
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setText("Ghi chú:");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
+
+        txtGhiChu.setColumns(20);
+        txtGhiChu.setRows(5);
+        jScrollPane3.setViewportView(txtGhiChu);
+
+        jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, 260, -1));
+
         jTabbedPane1.addTab("CA", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblCaLam.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -125,7 +256,7 @@ public class Calam extends javax.swing.JDialog {
                 "Ca làm", "Nhân viên", "Trạng thái", "Ghi chú"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblCaLam);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -195,6 +326,17 @@ public class Calam extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHuyActionPerformed
 
+    private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
+        // TODO add your handling code here:
+        this.row = tblNhanVien.getSelectedRow();
+        this.edit();
+    }//GEN-LAST:event_tblNhanVienMouseClicked
+
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+        // TODO add your handling code here:
+        CapNhat();
+    }//GEN-LAST:event_btnXacNhanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -240,20 +382,24 @@ public class Calam extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnXacNhan;
+    private javax.swing.ButtonGroup btngTrangThai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JRadioButton rboCoMat;
+    private javax.swing.JRadioButton rboVang;
+    private javax.swing.JTable tblCaLam;
+    private javax.swing.JTable tblNhanVien;
+    private javax.swing.JTextArea txtGhiChu;
     // End of variables declaration//GEN-END:variables
 }

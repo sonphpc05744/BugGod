@@ -66,13 +66,16 @@ public class JDBC {
      *
      */
     public static void update(String sql, Object... args) {
-        try (PreparedStatement ps = JDBC.getStmt(sql, args)) {
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    try (
+        Connection conn = DriverManager.getConnection(connectionUrl);
+        PreparedStatement ps = getStmt(sql, args)
+    ) {
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        throw new RuntimeException(e);
     }
+}
 
 
     /*

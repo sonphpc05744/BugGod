@@ -39,6 +39,7 @@ public class ChiTieuDao extends PeachCoffeeDao<ChiTieu, String> {
         JDBC.update(UPDATE_SQL,
                 entity.isTrangThai(),
                 entity.getMaHD());
+
     }
 
     @Override
@@ -54,13 +55,11 @@ public class ChiTieuDao extends PeachCoffeeDao<ChiTieu, String> {
     @Override
     public ChiTieu selectById(String key) {
         List<ChiTieu> list = selectBySql(SELECT_BY_ID_SQL, key);
-        return list.size() > 0 ? list.get(0) : new ChiTieu(); // Trả về một đối tượng ChiTieu mới nếu không tìm thấy
+        return list.size() > 0 ? list.get(0) : new ChiTieu();
     }
 
-    public ChiTieu selectById(int mahd) {
-        List<ChiTieu> list = selectBySql(SELECT_BY_ID_SQL, mahd);
-        return list.size() > 0 ? list.get(0) : new ChiTieu(); // Trả về một đối tượng ChiTieu mới nếu không tìm thấy
-    }
+   
+
 
     @Override
     protected List<ChiTieu> selectBySql(String sql, Object... args) {
@@ -89,6 +88,11 @@ public class ChiTieuDao extends PeachCoffeeDao<ChiTieu, String> {
             throw new RuntimeException(ex);
         }
         return list;
+    }
+
+    public ChiTieu selectById(int MaHD) {
+          List<ChiTieu> list = selectBySql(SELECT_BY_ID_SQL, MaHD);
+        return list.size() > 0 ? list.get(0) : new ChiTieu();
     }
 
 }

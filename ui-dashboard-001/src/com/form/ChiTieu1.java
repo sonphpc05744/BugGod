@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import com.untils.XDate;
 import model.ChiTieu;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -20,14 +21,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ChiTieu1 extends javax.swing.JPanel {
 
-     List<Integer> listmhdc = new ArrayList<>();
-    
     ChiTieuDao CTD = new ChiTieuDao();
+    List<Integer> listMaHD = new ArrayList<>();
     int row = -1;
 
-    /**
-     * Creates new form ChiTieu1
-     */
     public ChiTieu1() {
         initComponents();
         init();
@@ -35,23 +32,24 @@ public class ChiTieu1 extends javax.swing.JPanel {
 
     public void init() {
         fillTable();
-        fillTable2();
+         fillTable2();
     }
 
-    public void fillTable() {
+    private void fillTable() {
         DefaultTableModel model = (DefaultTableModel) tblChiTieu.getModel();
         model.setRowCount(0);
+        //listMaHD.clear();
         try {
             List<ChiTieu> list = CTD.selectAll();
             for (ChiTieu CT : list) {
-                
+              // listMaHD.add(CT.getMaHD());
                 Object[] row = {
-                    CT.getMaHD(),
-                    CT.getTenNV(),
-                    CT.getTien(),
-                    CT.getThoiGian(),
-                    CT.getGhiChu()
-                };
+                    CT.getMaHD(), 
+                    CT.getTenNV(), 
+                    CT.getTien(), 
+                    CT.getThoiGian(), 
+                    CT.getGhiChu()};
+
                 model.addRow(row);
             }
         } catch (Exception e) {
@@ -63,198 +61,111 @@ public class ChiTieu1 extends javax.swing.JPanel {
     private ChiTieu getForm() {
         ChiTieu CT = new ChiTieu();
         CT.setTenNV(txtTenNV.getText());
-        CT.setTien(Double.valueOf(txtTien.getText()));
+        CT.setTien(Double.parseDouble( txtTien.getText()));
         CT.setThoiGian(txtNgayLay.getDate());
         CT.setGhiChu(txtGhiChu.getText());
         return CT;
     }
 
-    public void setForm(ChiTieu CT) {
+    private void setForm(ChiTieu CT) {
         txtTenNV.setText(CT.getTenNV());
         txtTien.setText(String.valueOf(CT.getTien()));
         txtNgayLay.setDate(CT.getThoiGian());
         txtGhiChu.setText(CT.getGhiChu());
     }
 
-    public void edit() {
-        int MaHD = (int) tblChiTieu.getValueAt(this.row, 0);
-        ChiTieu ct = CTD.selectById(String.valueOf(MaHD));
-        this.setForm(ct);
+    private void edit() {
+        int makh = (int) tblChiTieu.getValueAt(this.row, 0);
+        ChiTieu kh = CTD.selectById(makh);
+        this.setForm(kh);
     }
 
     private void clearForm() {
         ChiTieu ct = new ChiTieu();
         this.setForm(ct);
-        this.row = -1;
-
+        row = -1;
     }
 
     private void them() {
-        ChiTieu model = getForm();
+        ChiTieu nv = this.getForm();
         try {
-            CTD.insert(model);
-            this.fillTable();
+            CTD.insert(nv); // thêm mới
+            this.fillTable(); // đỗ lại bảng
+            this.clearForm(); // xóa trắng form
             XDialog.alert(this, "Thêm hóa đơn thành công!");
         } catch (Exception e) {
             XDialog.alert(this, "Thêm hóa đơn thất bại!");
             e.printStackTrace();
         }
+        fillTable2();
     }
-
-//    public void fillTable2() {
-//        DefaultTableModel model = (DefaultTableModel) tblLichSu.getModel();
-//        model.setRowCount(0);
-//        listmhdc.clear();
-//        try {
-//            List<ChiTieu> list = CTD.selectAll();
-//            
-//            for (ChiTieu CT : list) {
-//                listmhdc.add(CT.getMaHD());
-//                Object[] row = {
-//                    CT.getMaHD(),
-//                    CT.getTenNV(),
-//                    CT.getTien(),
-//                    CT.getThoiGian(),
-//                    CT.getGhiChu(),
-//                    CT.isTrangThai() ? "Xác nhận" : "Không xác nhận"
-//                };
-//                model.addRow(row);
-//            }
-//        } catch (Exception e) {
-//            XDialog.alert(this, "Lỗi truy vấn dữ liệu lịch sử");
-//            e.printStackTrace();
-//        }
-//    }
-//
-//     private ChiTieu getForm2() {
-//        ChiTieu CT = new ChiTieu();
-//        if (row >= 0 && row < listmhdc.size()) {
-//            int maCL = listmhdc.get(row);
-//            CT.setMaHD(maCL);
-//            
-//            if (rboKoXacNhan.isSelected()) {
-//                CT.setTrangThai(true);
-//            } else {
-//                CT.setTrangThai(false);
-//            }
-//           
-//        }
-//
-//        return CT;
-//    }
-//
-//
-//    
-//    
-//    public void setForm2(ChiTieu CT) {
-//        
-//        lblTenNV.setText(CT.getTenNV());
-//        lblTien.setText(String.valueOf(CT.getTien()));
-//        lblNgay.setText(String.valueOf(CT.getThoiGian()));
-//        txtGhiChu2.setText(CT.getGhiChu());
-//        rboXacNhan.setSelected(CT.isTrangThai());
-//        rboKoXacNhan.setSelected(!CT.isTrangThai());
-//    }
-//
-//    private void edit2() {
-//    if (!listmhdc.isEmpty() && row >= 0 && row < listmhdc.size()) {
-//        int mahd = listmhdc.get(row);
-//        ChiTieu CT = CTD.selectById(mahd);
-//        this.setForm2(CT);
-//    } else {
-//        // Xử lý trường hợp listmhdc rỗng hoặc row không hợp lệ
-//    }
-//}
-//
-//    public void capnhat() {
-//    ChiTieu ct = this.getForm2();
-//
-//    try {
-//        CTD.update(ct); // cập nhật chỉ trạng thái, không phải toàn bộ đối tượng
-//        this.fillTable2();// đổ lại bảng
-//        XDialog.alert(this, "Đã xác nhận thành công!");
-//    } catch (Exception e) {
-//        XDialog.alert(this, "Lỗi! Không thể cập nhật");
-//        e.printStackTrace();
-//    }
-//}
     
-     private void fillTable2() {
+    private void fillTable2() {
         DefaultTableModel model = (DefaultTableModel) tblLichSu.getModel();
         model.setRowCount(0);
-        listmhdc.clear();
-        
+        listMaHD.clear();
         try {
             List<ChiTieu> list = CTD.selectAll();
-            for (ChiTieu CL : list) {
-                listmhdc.add(CL.getMaHD());                              
-                    Object[] row = {
-                        CL.getMaHD(),
-                        CL.getTenNV(),
-                        CL.getTien(),
-                        CL.getGhiChu(),
-                        CL.getThoiGian(),
-                        CL.isTrangThai() ? "Xác nhận" : "Không xác nhận"
-                        
-                    };
-                    model.addRow(row);
-                
+            for (ChiTieu CT : list) {
+               listMaHD.add(CT.getMaHD());
+                Object[] row = {
+                    CT.getMaHD(), 
+                    CT.getTenNV(), 
+                    CT.getTien(), 
+                    CT.getThoiGian(), 
+                    CT.getGhiChu(),
+                    CT.isTrangThai() ? "Xác nhận" : "Không xác nhân"};
+
+                model.addRow(row);
             }
         } catch (Exception e) {
-            XDialog.alert(this, "Lỗi truy vấn dữ liệu lịch sử chi tiêu!");
+            XDialog.alert(this, "Lỗi truy vấn dữ liệu lịch sử Chi Tieu");
             e.printStackTrace();
         }
     }
 
     private ChiTieu getForm2() {
-        ChiTieu CT = new ChiTieu();
-
-        if (row >= 0 && row < listmhdc.size()) {
-            Integer maCL = listmhdc.get(row);
-            CT.setMaHD(maCL);
-            
-            if (rboKoXacNhan.isSelected()) {
+        ChiTieu CT = new ChiTieu(); 
+        CT.setMaHD((int) tblLichSu.getValueAt(row, 0));
+            if (rboXacNhan.isSelected()) {
                 CT.setTrangThai(true);
             } else {
                 CT.setTrangThai(false);
-            }
-            CT.setGhiChu(txtGhiChu.getText());
-        }
-
+            }    
         return CT;
     }
 
-    public void setForm2(ChiTieu Cl) {
-        lblTenNV.setText(Cl.getTenNV());
-     //   lblTien.setText(String.valueOf(Cl.getTien()));
-//        lblNgay.setText(Cl.getThoiGian());
-        txtGhiChu2.setText(Cl.getGhiChu());
-        rboKoXacNhan.setSelected(!Cl.isTrangThai());
-        rboXacNhan.setSelected(Cl.isTrangThai());
+    
+    private void setForm2(ChiTieu CT) {
+        lblTenNV.setText(CT.getTenNV());
+        lblTien.setText(String.valueOf(CT.getTien()));
+        lblNgay.setText(XDate.toString(CT.getThoiGian()));
+        txtGhiChu2.setText(CT.getGhiChu());
+        rboKoXacNhan.setSelected(!CT.isTrangThai());
+        rboXacNhan.setSelected(CT.isTrangThai());
     }
 
     private void edit2() {
-        if (row >= 0 && row < listmhdc.size()) {
-            Integer maCl = listmhdc.get(row);
-            ChiTieu CT = CTD.selectById(maCl);
-            this.setForm2(CT);
-        } else {
-            XDialog.alert(this, "Vui lòng chọn một hàng để chỉnh sửa.");
-        }
+        int makh = (int) tblChiTieu.getValueAt(this.row, 0);
+        ChiTieu kh = CTD.selectById(makh);
+        this.setForm2(kh);
     }
 
-    public void capnhat() {
-        ChiTieu Cl = this.getForm();
-
+    public void CapNhat(){
+        ChiTieu CT = this.getForm2();
         try {
-            CTD.update(Cl); // cập nhật
-            this.fillTable2();// đổ lại bảng
+            System.out.println(""+CT.getMaHD() + CT.isTrangThai());
+            CTD.update(CT); 
+            this.fillTable2();
             XDialog.alert(this, "Đã xác nhận thành công!");
         } catch (Exception e) {
             XDialog.alert(this, "Lỗi! Không thể cập nhật");
             e.printStackTrace();
         }
     }
+
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -462,7 +373,7 @@ public class ChiTieu1 extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Tên NV", "Số tiền", "Ngày ", "Ghi chú", "Trạng thái"
+                "Mã hóa đơn", "Tên NV", "Số tiền", "Ngày ", "Ghi chú", "Trạng thái"
             }
         ));
         tblLichSu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -685,7 +596,7 @@ public class ChiTieu1 extends javax.swing.JPanel {
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
         // TODO add your handling code here:
-        clearForm();
+        //   clearForm();
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void tblChiTieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTieuMouseClicked
@@ -696,13 +607,13 @@ public class ChiTieu1 extends javax.swing.JPanel {
 
     private void tblLichSuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLichSuMouseClicked
         // TODO add your handling code here:
-        this.row = tblLichSu.getSelectedRow();
-        this.edit2();
+          this.row = tblLichSu.getSelectedRow();
+          this.edit2();
     }//GEN-LAST:event_tblLichSuMouseClicked
 
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
         // TODO add your handling code here:
-        capnhat();
+        CapNhat();
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
 
