@@ -7,18 +7,19 @@ package com.raven.form;
 import PeachCoffe.entity.KhuyenMai;
 import PeachCoffe.entity.SanPham;
 import PeachCoffee.DAO.KhuyenMaiDao;
+import PeachCoffee.DAO.LoaiSanPhamDao;
 import PeachCoffee.DAO.SanPhamDao;
 import PeachCoffee.utils.MsgBox;
-import PeachCoffee.utils.XDate;
-import com.toedter.calendar.JDateChooser;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
+
 
 /**
  *
@@ -32,19 +33,29 @@ public class KhuyenMai1 extends javax.swing.JPanel {
     public KhuyenMai1() {
         initComponents();
         init();
+
     }
 
     void init() {
         fillTableKM();
         fillTableSP();
-//        fillComboBoxKM();
-//        fillComboBoxLoaiSP();
+        clickCheckBox();
+        fillComboBoxKM();
+
     }
+    boolean flag = false;
+    
+    void kiemTraInsert(){
+        
+    }
+    
 
     KhuyenMaiDao daokm = new KhuyenMaiDao();
     SanPhamDao daosp = new SanPhamDao();
     KhuyenMai km = new KhuyenMai();
+    LoaiSanPhamDao daolsp = new LoaiSanPhamDao();
     int row = 0;
+    int row2 = -1;
 
     void fillTableKM() {
         DefaultTableModel model = (DefaultTableModel) tblKhuyenMai.getModel();
@@ -61,6 +72,7 @@ public class KhuyenMai1 extends javax.swing.JPanel {
                 };
                 model.addRow(row);// thêm một hàng vào table
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             //MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
@@ -71,15 +83,46 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tblSanPam.getModel();
         model.setRowCount(0);
         try {
-            List<SanPham> list = daosp.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
-            for (SanPham nv : list) {
+            List<SanPham> list1 = daosp.selectAll();
+            List<KhuyenMai> list2 = daokm.selectAll(); //đọc all dữ liệu từ cơ sở dữ liệu
+            float GiamGia = 0;
+            boolean click = false;
+            for (SanPham sp : list1) {
+                if (sp.MaKM != null) {
+                    for (KhuyenMai km : list2) {
+                        if (sp.MaKM.equals(km.MaKM)) {
+                            click = true;
+                            //System.out.println("co ma giong");
+                            if (km.LoaiKM == true) {
+                                float phanTramGiamGia = km.GiaKM; // GiaKM chứa phần trăm giảm giá
+                                GiamGia = (sp.getGia() - (sp.getGia() * km.GiaKM));
+                            } else {
+                                GiamGia = sp.getGia() - km.GiaKM;
+                            }
+                        }
+
+                    }
+
+                } else {
+                    click = false;
+                    GiamGia = 0;
+                }
+                // System.out.println("" + click);
                 Object[] row = {
-                    nv.getMaKM(),
-                    nv.getTenSP(),
-                    nv.getGia(),
-                    "0"
+                    sp.getMaSP(),
+                    sp.getTenSP(),
+                    sp.getGia(),
+                    GiamGia,
+                    click
+
                 };
+
                 model.addRow(row);// thêm một hàng vào table
+
+            }
+            if (row2 == -1) {
+                tblSanPam.setEnabled(false);
+                //MsgBox.alert(this, "Chưa chọn KM");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,7 +132,7 @@ public class KhuyenMai1 extends javax.swing.JPanel {
 
     void edit() {
         try {
-            String MaKM = (String) tblKhuyenMai.getValueAt(this.row, 0);
+            String MaKM = (String) tblKhuyenMai.getValueAt(this.row2, 0);
             KhuyenMai model = daokm.selectById(MaKM);
             if (model != null) {//Tìm thấy dữ liệu
                 setForm(model);
@@ -123,8 +166,6 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         KhuyenMai km = new KhuyenMai();
         km.setMaKM(txtMaKM.getText());
         km.setTenKM(txtTenKM.getText());
-//        km.setNgayBD(txtNgayBD.getDateFormatString());
-//        km.setNgayKT(txtNgayKT.getDateFormatString());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         Date ngayBDDate = txtNgayBD.getDate();
@@ -142,47 +183,19 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         return km;
     }
 
-    void TimKhuyenMai() {
+    void TimKhuyenMai1(String str) {
         DefaultTableModel model = (DefaultTableModel) tblKhuyenMai.getModel();
-        model.setRowCount(0);
-        try {
-            String keyword = txtTenKM1.getText();
-
-            List<KhuyenMai> list = daokm.selectByKeyword(keyword); //đọc all dữ liệu từ cơ sở dữ liệu
-            for (KhuyenMai nh : list) {
-                Object[] row = {
-                    nh.getMaKM(),
-                    nh.getTenKM(),
-                    nh.isLoaiKM() ? "%" : "VNĐ",
-                    nh.getGiaKM(),
-                    nh.isTrangThai() ? "Đang diễn ra" : "Đã kết thúc"};
-                model.addRow(row);
-// thêm một hàng vào table
-            }
-        } catch (Exception e) {
-            MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
-        }
+        TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+        tblKhuyenMai.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter(str));
     }
 
-    void TimSanPham() {
+    void TimSanPham1(String str) {
         DefaultTableModel model = (DefaultTableModel) tblSanPam.getModel();
-        model.setRowCount(0);
-        try {
-            String keyword = txtTenSP.getText();
-
-            List<SanPham> list = daosp.selectByKeyword(keyword); //đọc all dữ liệu từ cơ sở dữ liệu
-            for (SanPham nh : list) {
-                Object[] row = {
-                    nh.getMaSP(),
-                    nh.getTenSP(),
-                    nh.getGia()
-                };
-                model.addRow(row);
-// thêm một hàng vào table
-            }
-        } catch (Exception e) {
-            MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
-        }
+        TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+        tblSanPam.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter(str));
+        //row2 = -1;
     }
 
     void insert() {
@@ -244,36 +257,6 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         }
     }
 
-//    private void fillComboBoxKM() {
-//        DefaultComboBoxModel model = (DefaultComboBoxModel) cboKhuyenMai.getModel();
-//        model.removeAllElements();
-//        List<KhuyenMai> list = daokm.selectAll();
-//        for (KhuyenMai cd : list) {
-//            model.addElement(
-//                    cd.isLoaiKM() ? "%" : "VND"
-//            );
-//
-//        }
-    //   }
-//    void fillComboBoxKM() {
-//        DefaultComboBoxModel model = (DefaultComboBoxModel) cboKhuyenMai.getModel();
-//        model.removeAllElements();
-//
-//        List<Boolean> list = daokm.selectKM();
-//        for (boolean year : list) {
-//            model.addElement(year ? "%" : "VNĐ");
-//        }
-//
-//    }
-//    void fillComboBoxLoaiSP() {
-//        DefaultComboBoxModel model = (DefaultComboBoxModel) cboLoaiSanPham.getModel();
-//        model.removeAllElements();
-//
-//        List<Boolean> list = daokm.selectKM();
-//        for (boolean year : list) {
-//            model.addElement(year ? "Đồ ăn" : "Thức uống");
-//        }
-//    }
     void LocKhuyenMai() {
         DefaultTableModel model = (DefaultTableModel) tblKhuyenMai.getModel();
         model.setRowCount(0);
@@ -289,55 +272,51 @@ public class KhuyenMai1 extends javax.swing.JPanel {
                     nh.getGiaKM(),
                     nh.isTrangThai() ? "Đang diễn ra" : "Đã kết thúc"};
                 model.addRow(row);
-// thêm một hàng vào table
             }
         } catch (Exception e) {
             MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
         }
     }
 
-    void LocSanPham() {
-        DefaultTableModel model = (DefaultTableModel) tblSanPam.getModel();
-        model.setRowCount(0);
-        try {
-            String chuoi =(String) cboLoaiSanPham1.getSelectedItem();
+    void clickCheckBox() {
+        for (int row : tblSanPam.getSelectedRows()) {
+            Object value = tblSanPam.getValueAt(row, 4);
+            SanPham sp = new SanPham();
 
-            List<SanPham> list = daosp.selectLoaiSP(chuoi); //đọc all dữ liệu từ cơ sở dữ liệu
-            if (!list.isEmpty()) { // Kiểm tra danh sách có phần tử không
-                for (SanPham nh : list) {
-                    Object[] row = {
-                        nh.getMaSP(),
-                        nh.getTenSP(),
-                        nh.getGia()
-                    };
-                    model.addRow(row);
+            if (value instanceof Boolean) {
+            
+                boolean isChecked = (boolean) value;
+                if (isChecked) {
+
+                    row2 = tblKhuyenMai.getSelectedRow();
+
+                    row = tblSanPam.getSelectedRow();
+                    String MaKM = (String) tblKhuyenMai.getValueAt(row2, 0);
+
+                    String MaSP = (String) tblSanPam.getValueAt(row, 0);
+                    daokm.UpdateKM(MaKM, MaSP);
+                    // System.out.println("" + MaKM + MaSP);
+                    fillTableSP();
+
+                } else {
+                    row = tblSanPam.getSelectedRow();
+                    String MaSP = (String) tblSanPam.getValueAt(row, 0);
+                    daokm.UpdateKM(null, MaSP);
+                    fillTableSP();
+
                 }
+
             }
-        } catch (Exception e) {
-            //MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
-            throw new RuntimeException(e);
+
         }
     }
 
-    void clickCheckBox() {
-
-//        for (int row : tblSanPam.getSelectedRows()) {
-//            boolean value = (boolean) tblSanPam.getValueAt(row, 4);
-//           
-//
-//        }
-        for (int row : tblSanPam.getSelectedRows()) {
-            Object value = tblSanPam.getValueAt(row, 4);
-            if (value instanceof Boolean) {
-                boolean isChecked = (boolean) value;
-                if (isChecked) {
-                    MsgBox.alert(this, "Checkbox tại hàng " + row + " đã được chọn.");
-                    // Thực hiện các hành động khi checkbox đã được chọn ở đây
-                } else {
-                    MsgBox.alert(this, "Checkbox tại hàng " + row + " không được chọn.");
-                    // Thực hiện các hành động khi checkbox không được chọn ở đây
-                }
-            }
+    private void fillComboBoxKM() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboLoaiSanPham1.getModel();
+        model.removeAllElements();
+        List<String> list = daosp.selectTenLSP();
+        for (String sp : list) {
+            model.addElement(sp);
         }
     }
 
@@ -379,7 +358,6 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txtTenKM1 = new javax.swing.JTextField();
-        btnTimKhuyenMai = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         cboKhuyenMai = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -387,11 +365,8 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblKhuyenMai = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
-        btnTimSP = new javax.swing.JButton();
         txtTenSP = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         cboLoaiSanPham1 = new javax.swing.JComboBox<>();
 
         cboLoaiSanPham.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -602,13 +577,9 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Tên khuyến mãi:");
 
-        btnTimKhuyenMai.setBackground(new java.awt.Color(105, 101, 220));
-        btnTimKhuyenMai.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnTimKhuyenMai.setForeground(new java.awt.Color(255, 255, 255));
-        btnTimKhuyenMai.setText("Tìm");
-        btnTimKhuyenMai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimKhuyenMaiActionPerformed(evt);
+        txtTenKM1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTenKM1KeyReleased(evt);
             }
         });
 
@@ -616,7 +587,7 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         jLabel9.setText("Loại khuyến mãi:");
 
         cboKhuyenMai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cboKhuyenMai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VNĐ", "%" }));
+        cboKhuyenMai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VNĐ", "%", "Tất cả" }));
         cboKhuyenMai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboKhuyenMaiActionPerformed(evt);
@@ -666,35 +637,17 @@ public class KhuyenMai1 extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Tên sản phẩm:");
 
-        btnTimSP.setBackground(new java.awt.Color(105, 101, 220));
-        btnTimSP.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnTimSP.setForeground(new java.awt.Color(255, 255, 255));
-        btnTimSP.setText("Tìm");
-        btnTimSP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimSPActionPerformed(evt);
+        txtTenSP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTenSPKeyReleased(evt);
             }
         });
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setText("Loại sản phẩm");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("jButton1");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         cboLoaiSanPham1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cboLoaiSanPham1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đồ ăn", "Thức uống" }));
+        cboLoaiSanPham1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Đồ ăn", "Thức uống" }));
         cboLoaiSanPham1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboLoaiSanPham1ActionPerformed(evt);
@@ -712,25 +665,16 @@ public class KhuyenMai1 extends javax.swing.JPanel {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnTimSP)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel10))
-                        .addGap(12, 12, 12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
                             .addComponent(cboLoaiSanPham1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtTenKM1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnTimKhuyenMai)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtTenKM1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
@@ -751,9 +695,7 @@ public class KhuyenMai1 extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTenKM1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(cboKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -761,15 +703,11 @@ public class KhuyenMai1 extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTimSP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2)))
+                        .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cboLoaiSanPham1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(cboLoaiSanPham1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(41, 41, 41)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
@@ -836,29 +774,11 @@ public class KhuyenMai1 extends javax.swing.JPanel {
 
     private void tblKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhuyenMaiMouseClicked
         // TODO add your handling code here:
-        this.row = tblKhuyenMai.rowAtPoint(evt.getPoint());
+        this.row2 = tblKhuyenMai.rowAtPoint(evt.getPoint());
         edit();
+
+        // System.out.println("Click row 2 "+row2);
     }//GEN-LAST:event_tblKhuyenMaiMouseClicked
-
-    private void btnTimKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKhuyenMaiActionPerformed
-        // TODO add your handling code here:
-        TimKhuyenMai();
-    }//GEN-LAST:event_btnTimKhuyenMaiActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        fillTableKM();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        fillTableSP();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void btnTimSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimSPActionPerformed
-        // TODO add your handling code here:
-        TimSanPham();
-    }//GEN-LAST:event_btnTimSPActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
@@ -873,13 +793,36 @@ public class KhuyenMai1 extends javax.swing.JPanel {
 
     private void tblSanPamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPamMouseClicked
         // TODO add your handling code here:
-        clickCheckBox();
+        if (row2 == -1) {
+            tblSanPam.setEnabled(false);
+            MsgBox.alert(this, "Chưa chọn KM");
+        } else if (row2 != -1) {
+            tblSanPam.setEnabled(true);
+            clickCheckBox();
+            //row = -1;
+        }
+
+
     }//GEN-LAST:event_tblSanPamMouseClicked
 
     private void cboLoaiSanPham1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboLoaiSanPham1ActionPerformed
         // TODO add your handling code here:
-        LocSanPham();
+        // LocSanPham();
     }//GEN-LAST:event_cboLoaiSanPham1ActionPerformed
+
+    private void txtTenKM1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenKM1KeyReleased
+        // TODO add your handling code here:
+        String timKiem = txtTenKM1.getText();
+        TimKhuyenMai1(timKiem);
+        row2 = -1;
+        tblSanPam.setEnabled(false);
+    }//GEN-LAST:event_txtTenKM1KeyReleased
+
+    private void txtTenSPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenSPKeyReleased
+        // TODO add your handling code here:
+        String timKiem = txtTenSP.getText();
+        TimSanPham1(timKiem);
+    }//GEN-LAST:event_txtTenSPKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -888,14 +831,10 @@ public class KhuyenMai1 extends javax.swing.JPanel {
     private javax.swing.JButton btnCapNhat;
     private javax.swing.JButton btnMoi;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton btnTimKhuyenMai;
-    private javax.swing.JButton btnTimSP;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboKhuyenMai;
     private javax.swing.JComboBox<String> cboLoaiSanPham;
     private javax.swing.JComboBox<String> cboLoaiSanPham1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
