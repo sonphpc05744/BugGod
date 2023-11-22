@@ -49,6 +49,7 @@ public class Main extends javax.swing.JFrame {
         form5 = new ThongKe1();
         form6 = new QuanLyNhanVien1();
         form7 = new ChiTieu1();
+        init();
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
@@ -56,7 +57,6 @@ public class Main extends javax.swing.JFrame {
                 if (index == 0) {
                     setForm(home);
                 } else if (index == 1) {
-                    init();
                     setForm(form1);
                 } else if (index == 2) {
                     setForm(form2);
@@ -89,8 +89,6 @@ public class Main extends javax.swing.JFrame {
         mainPanel.add(form1);
         form1.testData();
     }
-
-
 
     private Point getLocationOf(Component com) {
         Point p = form1.getPanelItemLocation();

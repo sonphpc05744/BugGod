@@ -14,10 +14,17 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import javax.swing.JOptionPane;
+import javax.swing.AbstractCellEditor;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -25,11 +32,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Menu1 extends javax.swing.JPanel {
 
+    DefaultTableModel model;
+    DefaultCellEditor cellEditor;
     List<SanPham> listSP = new ArrayList<>();
+    List<Integer> listrow = new ArrayList<>();
     sanPhamDao SPDao = new sanPhamDao();
     private SanPham itemSelected;
     int soluong = 0;
     double tongtien = 0;
+    int row = -1;
 
     /**
      * Creates new form Menu1
@@ -93,6 +104,9 @@ public class Menu1 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        mnuPopXoa = new javax.swing.JMenuItem();
+        mnuPopRemoveAll = new javax.swing.JMenuItem();
         jPanel5 = new javax.swing.JPanel();
         scroll1 = new javax.swing.JScrollPane();
         panelItem1 = new com.swing.PanelItem();
@@ -131,6 +145,22 @@ public class Menu1 extends javax.swing.JPanel {
         jTable4 = new javax.swing.JTable();
         jLabel24 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
+
+        mnuPopXoa.setText("jMenuItem1");
+        mnuPopXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPopXoaActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(mnuPopXoa);
+
+        mnuPopRemoveAll.setText("jMenuItem1");
+        mnuPopRemoveAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPopRemoveAllActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(mnuPopRemoveAll);
 
         setBackground(new java.awt.Color(204, 204, 255));
 
@@ -205,18 +235,28 @@ public class Menu1 extends javax.swing.JPanel {
 
         jPanel7.setBackground(new java.awt.Color(204, 204, 255));
 
+        tblHoaDon.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Tên SP", "Giá SP", "Số Lượng", "Tổng Tiền"
             }
         ));
+        tblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHoaDonMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tblHoaDonMouseReleased(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblHoaDon);
+        if (tblHoaDon.getColumnModel().getColumnCount() > 0) {
+            tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(150);
+            tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(38);
+        }
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel16.setText("Tiền sản phẩm");
@@ -476,6 +516,39 @@ public class Menu1 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void tblHoaDonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseReleased
+        if (evt.isPopupTrigger()) {
+            jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_tblHoaDonMouseReleased
+
+    private void mnuPopXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPopXoaActionPerformed
+        for (int rowsp : tblHoaDon.getSelectedRows()) {
+            listrow.add(rowsp);
+        }
+        Collections.sort(listrow);
+        int number = 0;
+        while (true) {
+            if (listrow.size() == 0) {
+                break;
+            }
+            model.removeRow(listrow.get(listrow.size() - 1));
+            listrow.remove(listrow.size() - 1);
+        }
+    }//GEN-LAST:event_mnuPopXoaActionPerformed
+
+    private void mnuPopRemoveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPopRemoveAllActionPerformed
+        while (model.getRowCount() > 0) {
+            model.removeRow(0);
+        }
+
+    }//GEN-LAST:event_mnuPopRemoveAllActionPerformed
+
+    private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
+
+
+    }//GEN-LAST:event_tblHoaDonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton5;
@@ -501,6 +574,7 @@ public class Menu1 extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane4;
@@ -513,6 +587,8 @@ public class Menu1 extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JMenuItem mnuPopRemoveAll;
+    private javax.swing.JMenuItem mnuPopXoa;
     private com.swing.PanelItem panelItem1;
     private javax.swing.JScrollPane scroll1;
     private javax.swing.JTable tblHoaDon;
@@ -520,6 +596,10 @@ public class Menu1 extends javax.swing.JPanel {
 
     public void loadData() {
         listSP = SPDao.selectAll();
+        mnuPopXoa.setText("Xóa sản phẩm");
+        mnuPopRemoveAll.setText("Xóa tất cả");
+
+        // Tạo một DefaultCellEditor để chứa JSpinner
     }
 
     public void testData() {
@@ -539,8 +619,8 @@ public class Menu1 extends javax.swing.JPanel {
 //                    mainPanel.setImageSize(new Dimension(180, 120));
 //                    mainPanel.repaint();
                     setSelected(com);
-                    JOptionPane.showMessageDialog(null, "" + item.getMaSP() + " " + item.getTenSP());
-
+//                    JOptionPane.showMessageDialog(null, "" + item.getMaSP() + " " + item.getTenSP());
+                    fillToTable(item);
                     //home.showItem(item);
                     //     animator.start();
                     //    }
@@ -553,15 +633,56 @@ public class Menu1 extends javax.swing.JPanel {
     }
 
     public void fillToTable(SanPham sanPham) {
-        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
-        model.setRowCount(0);
+        model = (DefaultTableModel) tblHoaDon.getModel();
 
         try {
             Object[] row = {
                 sanPham.getTenSP(),
-                sanPham.getGia()
+                sanPham.getGia(),
+                1, 1
             };
+            model.addRow(row);
+            tblHoaDon.getColumnModel().getColumn(2).setCellEditor((TableCellEditor) new SpinnerEditor());
+            tblHoaDon.getColumnModel().getColumn(2).setCellRenderer(new SpinnerRenderer());
+            tblHoaDon.setRowHeight(25);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+    class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
+
+        private JSpinner spinner;
+
+        public SpinnerEditor() {
+            spinner = new JSpinner();
+            spinner.setModel(new SpinnerNumberModel(1, 0, 100, 1));
+            spinner.setBorder(null);
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return spinner.getValue();
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            spinner.setValue(value);
+            return spinner;
+        }
+    }
+
+    class SpinnerRenderer extends JSpinner implements TableCellRenderer {
+
+        public SpinnerRenderer() {
+            setModel(new SpinnerNumberModel(0, 0, 100, 1));
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setValue(value);
+            return this;
+        }
+    }
+
 }
