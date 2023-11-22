@@ -9,17 +9,15 @@ import com.component.Item;
 import com.event.EventItem;
 import com.model.SanPham;
 import com.swing.ScrollBar;
-import com.utils.MsBox;
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,6 +28,8 @@ public class Menu1 extends javax.swing.JPanel {
     List<SanPham> listSP = new ArrayList<>();
     sanPhamDao SPDao = new sanPhamDao();
     private SanPham itemSelected;
+    int soluong = 0;
+    double tongtien = 0;
 
     /**
      * Creates new form Menu1
@@ -104,7 +104,7 @@ public class Menu1 extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblHoaDon = new javax.swing.JTable();
         jLabel16 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
@@ -205,7 +205,7 @@ public class Menu1 extends javax.swing.JPanel {
 
         jPanel7.setBackground(new java.awt.Color(204, 204, 255));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -213,10 +213,10 @@ public class Menu1 extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Tên SP", "Giá SP", "Số Lượng", "Tổng Tiền"
             }
         ));
-        jScrollPane4.setViewportView(jTable3);
+        jScrollPane4.setViewportView(tblHoaDon);
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel16.setText("Tiền sản phẩm");
@@ -399,13 +399,13 @@ public class Menu1 extends javax.swing.JPanel {
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Người Tạo", "Thời Gian", "Tổng Tiền", "Trạng Thái", "Ghi Chú"
             }
         ));
         jScrollPane6.setViewportView(jTable4);
@@ -506,7 +506,6 @@ public class Menu1 extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField10;
@@ -516,6 +515,7 @@ public class Menu1 extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField9;
     private com.swing.PanelItem panelItem1;
     private javax.swing.JScrollPane scroll1;
+    private javax.swing.JTable tblHoaDon;
     // End of variables declaration//GEN-END:variables
 
     public void loadData() {
@@ -524,19 +524,6 @@ public class Menu1 extends javax.swing.JPanel {
 
     public void testData() {
 
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-                System.out.println("dã rê");
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-              
-                System.out.println("đã rời");
-            }
-        });
         setEvent(new EventItem() {
             @Override
             public void itemClick(Component com, SanPham item) {
@@ -562,6 +549,19 @@ public class Menu1 extends javax.swing.JPanel {
         });
         for (SanPham sanPham : listSP) {
             addItem(new SanPham(sanPham.getMaSP(), sanPham.getTenSP(), sanPham.getHinh(), sanPham.getGia(), sanPham.getGhiChu(), sanPham.getLoaiSP(), sanPham.getKhuyenMai(), sanPham.isTrangThai()));
+        }
+    }
+
+    public void fillToTable(SanPham sanPham) {
+        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
+        model.setRowCount(0);
+
+        try {
+            Object[] row = {
+                sanPham.getTenSP(),
+                sanPham.getGia()
+            };
+        } catch (Exception e) {
         }
     }
 }
