@@ -8,6 +8,7 @@ import com.Dao.sanPhamDao;
 import com.component.Item;
 import com.event.EventItem;
 import com.model.SanPham;
+import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
 import com.swing.ScrollBar;
 import java.awt.Component;
 import java.awt.Point;
@@ -18,10 +19,13 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -36,11 +40,13 @@ public class Menu1 extends javax.swing.JPanel {
     DefaultCellEditor cellEditor;
     List<SanPham> listSP = new ArrayList<>();
     List<Integer> listrow = new ArrayList<>();
+    List<String> listMaSP = new ArrayList<>();
     sanPhamDao SPDao = new sanPhamDao();
     private SanPham itemSelected;
-    int soluong = 0;
-    double tongtien = 0;
+    List<Double> listGia = new ArrayList();
     int row = -1;
+    private JSpinner spinner;
+    int newValue = 0;
 
     /**
      * Creates new form Menu1
@@ -183,6 +189,12 @@ public class Menu1 extends javax.swing.JPanel {
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Tên sản phẩm");
 
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField7KeyReleased(evt);
+            }
+        });
+
         jButton5.setBackground(new java.awt.Color(0, 51, 153));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
@@ -250,6 +262,11 @@ public class Menu1 extends javax.swing.JPanel {
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblHoaDonMouseReleased(evt);
+            }
+        });
+        tblHoaDon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblHoaDonKeyReleased(evt);
             }
         });
         jScrollPane4.setViewportView(tblHoaDon);
@@ -549,6 +566,14 @@ public class Menu1 extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
+    private void jTextField7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7KeyReleased
+
+    private void tblHoaDonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblHoaDonKeyReleased
+
+    }//GEN-LAST:event_tblHoaDonKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton5;
@@ -607,24 +632,27 @@ public class Menu1 extends javax.swing.JPanel {
         setEvent(new EventItem() {
             @Override
             public void itemClick(Component com, SanPham item) {
-                if (itemSelected != null) {
-                    //        mainPanel.setImageOld(itemSelected.getImage());
-                }
-                if (itemSelected != item) {
-                    //         if (!animator.isRunning()) {
-                    itemSelected = item;
-                    //         animatePoint = getLocationOf(com);
+//                if (itemSelected != null) {
+//                    //        mainPanel.setImageOld(itemSelected.getImage());
+//                }
+//                if (itemSelected != item) {
+                //         if (!animator.isRunning()) {
+                itemSelected = item;
+                //         animatePoint = getLocationOf(com);
 //                    mainPanel.setImage(item.getImage());
 //                    //        mainPanel.setImageLocation(animatePoint);
 //                    mainPanel.setImageSize(new Dimension(180, 120));
 //                    mainPanel.repaint();
-                    setSelected(com);
+                setSelected(com);
 //                    JOptionPane.showMessageDialog(null, "" + item.getMaSP() + " " + item.getTenSP());
+                if (checkSP(item)) {
                     fillToTable(item);
-                    //home.showItem(item);
-                    //     animator.start();
-                    //    }
                 }
+
+                //home.showItem(item);
+                //     animator.start();
+                //    }
+                //}
             }
         });
         for (SanPham sanPham : listSP) {
@@ -634,13 +662,15 @@ public class Menu1 extends javax.swing.JPanel {
 
     public void fillToTable(SanPham sanPham) {
         model = (DefaultTableModel) tblHoaDon.getModel();
-
         try {
             Object[] row = {
                 sanPham.getTenSP(),
                 sanPham.getGia(),
-                1, 1
+                1,
+                sanPham.getGia()
             };
+            listMaSP.add(sanPham.getMaSP());
+            listGia.add(sanPham.getGia());
             model.addRow(row);
             tblHoaDon.getColumnModel().getColumn(2).setCellEditor((TableCellEditor) new SpinnerEditor());
             tblHoaDon.getColumnModel().getColumn(2).setCellRenderer(new SpinnerRenderer());
@@ -652,12 +682,26 @@ public class Menu1 extends javax.swing.JPanel {
 
     class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
 
-        private JSpinner spinner;
-
         public SpinnerEditor() {
             spinner = new JSpinner();
-            spinner.setModel(new SpinnerNumberModel(1, 0, 100, 1));
+            spinner.setModel(new SpinnerNumberModel(1, 1, 100, 1));
             spinner.setBorder(null);
+            spinner.addChangeListener(new ChangeListener() {
+
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    row = tblHoaDon.getEditingRow();
+                    if (row != -1) {
+                        newValue = (int) spinner.getValue();
+                        tblHoaDon.setValueAt(newValue, row, 2);
+                        double tongTien = listGia.get(row) * newValue;
+                        tblHoaDon.setValueAt(tongTien, row, 3);
+                    }
+
+                    fireEditingStopped();
+                    repaint();
+                }
+            });
         }
 
         @Override
@@ -675,7 +719,7 @@ public class Menu1 extends javax.swing.JPanel {
     class SpinnerRenderer extends JSpinner implements TableCellRenderer {
 
         public SpinnerRenderer() {
-            setModel(new SpinnerNumberModel(0, 0, 100, 1));
+            setModel(new SpinnerNumberModel(1, 1, 100, 1));
         }
 
         @Override
@@ -683,6 +727,24 @@ public class Menu1 extends javax.swing.JPanel {
             setValue(value);
             return this;
         }
+    }
+
+    public boolean checkSP(SanPham item) {
+        for (int i = 0; i < listMaSP.size(); i++) {
+            if (item.getMaSP().equals(listMaSP.get(i))) {
+                if (item.getGia() != listGia.get(listGia.size() - 1)) {
+                    listGia.add(item.getGia());
+                }
+                int currentValue = (int) tblHoaDon.getValueAt(i, 2);
+                System.out.println("" + i);
+                tblHoaDon.setValueAt((currentValue + 1), i, 2);
+                double tongTien = item.getGia() * (currentValue + 1);
+                tblHoaDon.setValueAt(tongTien, i, 3);
+
+                return false;
+            }
+        }
+        return true;
     }
 
 }
