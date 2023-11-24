@@ -21,6 +21,7 @@ import java.util.List;
 public class HoaDonDao extends PeachCoffeeDAO<HoaDon, String> {
 
     String SELECT_ALL_SQL = "Select * from HoaDon";
+    
 
     @Override
     public void insert(HoaDon entity) {
@@ -45,6 +46,12 @@ public class HoaDonDao extends PeachCoffeeDAO<HoaDon, String> {
     @Override
     public List<HoaDon> selectAll() {
         return this.selectBySql(SELECT_ALL_SQL);
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    public List<HoaDon> selectHDCoDK(Date NgayBDHD, Date NgayKTRHD) {
+       String SELECT_HD_SQL_CoDK = "SELECT * FROM HoaDon\n"
+            + "WHERE ThoiGianTao >= ? AND ThoiGianTao <= ?;";
+        return this.selectBySql(SELECT_HD_SQL_CoDK,NgayBDHD,NgayKTRHD);
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

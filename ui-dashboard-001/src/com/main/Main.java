@@ -21,6 +21,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -44,7 +47,7 @@ public class Main extends javax.swing.JFrame {
     private ChiTieu1 form7;
     private ModelItem itemSelected;
 
-    public Main() {
+    public Main() throws ParseException {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
         home = new TrangChu();
@@ -240,7 +243,11 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                try {
+                    new Main().setVisible(true);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
