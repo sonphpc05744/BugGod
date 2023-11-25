@@ -5,8 +5,10 @@
 package com.form;
 
 import com.dao.HoaDonDao;
+import com.dao.SanPhamDao;
 import com.dao.ThongKeDao;
 import com.entity.HoaDon;
+import com.entity.SanPham;
 import com.utils.MsgBox;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -68,12 +70,15 @@ public class ThongKe1 extends javax.swing.JPanel {
     }
     HoaDonDao daohd = new HoaDonDao();
     ThongKeDao daotk = new ThongKeDao();
+    SanPhamDao daosp = new SanPhamDao();
+   
     int row = 0;
     public void init() throws ParseException {
         fillTableHoaDon();
         fillThongKeHoaDonNgayHienTai();
         fillThongKeTuanNay();
         fillThongKeThangNay();
+        fillTableSanPham();
         // fillThongKeHoaDonTrongKhoangNgay();
 //ten();
 
@@ -218,6 +223,31 @@ public class ThongKe1 extends javax.swing.JPanel {
         tblThongKe.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter(str));
     }
+        
+         public void fillTableSanPham() {
+        DefaultTableModel model = (DefaultTableModel) tblSanPham.getModel();
+        model.setRowCount(0);
+        try {
+         
+
+                List<HoaDon> list = daohd.selectSP();
+                ThongKeDao daotk = new ThongKeDao();
+                for (int i = 0; i < list.size(); i++) {
+                    HoaDon hd = list.get(i);
+//                    String hoTen = daonh.selectById(hv.getMaNH()).getHoTen();
+                    Object[] row = {
+                        i + 1,
+                        
+                        
+                    };
+                    model.addRow(row);
+
+                }
+            
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu !");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -283,7 +313,7 @@ public class ThongKe1 extends javax.swing.JPanel {
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblSanPham = new javax.swing.JTable();
         jLabel23 = new javax.swing.JLabel();
         jDateChooser7 = new com.toedter.calendar.JDateChooser();
         jLabel24 = new javax.swing.JLabel();
@@ -692,7 +722,7 @@ public class ThongKe1 extends javax.swing.JPanel {
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel22.setText("DANH SÁCH SẢN PHẨM");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -703,7 +733,7 @@ public class ThongKe1 extends javax.swing.JPanel {
                 "STT", "Tên SP", "Số Lượng", "Doanh Thu"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(tblSanPham);
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel23.setText("Từ:");
@@ -858,7 +888,7 @@ public class ThongKe1 extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNgayKTMouseClicked
 
     private void txtTimKiemTrangThaiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemTrangThaiKeyReleased
-        // TODO add your handling code here:
+        // TODO add your handling code here:  
          String timKiem = txtTimKiemTrangThai.getText();
         TimKhuyenMai1(timKiem);
         row = -1;
@@ -912,7 +942,6 @@ public class ThongKe1 extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable3;
     private javax.swing.JLabel lblHoaDonTuyChon;
     private javax.swing.JLabel lblSoHDHomNay;
     private javax.swing.JLabel lblSoHoaTuanNay;
@@ -921,6 +950,7 @@ public class ThongKe1 extends javax.swing.JPanel {
     private javax.swing.JLabel lblTienTuyChon;
     private javax.swing.JLabel lblTongHDThangNay;
     private javax.swing.JLabel lblTongTienThangNay;
+    private javax.swing.JTable tblSanPham;
     private javax.swing.JTable tblThongKe;
     private com.toedter.calendar.JDateChooser txtHoaDonDen;
     private com.toedter.calendar.JDateChooser txtHoaDonTu;

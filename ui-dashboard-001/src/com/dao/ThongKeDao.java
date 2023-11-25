@@ -60,4 +60,11 @@ public class ThongKeDao {
         String[] cols = {"TongSoTien", "SoHoaDon"};
         return getListOfArray(sql, cols);
     }
+    
+      public List<Object[]> get_laySPTuHoaDon() {
+        String sql = "{CALL sp_laySPTuHoaDon}";
+        String[] cols = {"TenSP", "SpLuong","TongTien"};
+        
+        return getListOfArray(sql, cols);
+    }
 }
