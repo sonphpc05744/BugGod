@@ -5,7 +5,7 @@
 package com.form;
 
 import com.Dao.sanPhamDao;
-import com.dao.HoaDonDAO;
+//import com.dao.HoaDonDAO;
 import com.model.HoaDon;
 import com.model.SanPham;
 import java.util.List;
@@ -17,18 +17,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HoaDon2 extends javax.swing.JPanel {
 
-    HoaDonDAO hddao = new HoaDonDAO();
-    sanPhamDao spdao = new sanPhamDao();
-    String nguoiTao = "";
-    String tenSP = "";
-    double dongia = 0;
+//    HoaDonDAO hddao = new HoaDonDAO();
+//    sanPhamDao spdao = new sanPhamDao();
+//    String nguoiTao = "";
+//    String tenSP = "";
+//    double dongia = 0;
 
     /**
      * Creates new form HoaDon2
      */
     public HoaDon2() {
         initComponents();
-        init();
+//        init();
     }
 
     /**
@@ -460,90 +460,90 @@ public class HoaDon2 extends javax.swing.JPanel {
     private javax.swing.JTable tblHoaDon;
     private javax.swing.JTable tblLSHD;
     // End of variables declaration//GEN-END:variables
-public void init() {
-        fillToTable();
-        fillToTableHDCT();
-        fillToTableLSHD();
-    }
-
-    public void fillToTable() {
-        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
-        model.setRowCount(0);
-        try {
-            List<HoaDon> list = hddao.selectAll();
+//public void init() {
+//        fillToTable();
+//        fillToTableHDCT();
+//        fillToTableLSHD();
+//    }
+//
+//    public void fillToTable() {
+//        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
+//        model.setRowCount(0);
+//        try {
+//            List<HoaDon> list = hddao.selectAll();
+////            System.out.println("" + list);
+//            for (HoaDon hoaDon : list) {
+////                nguoiTao = String.valueOf(hoaDon.getTenNV()+"("+hoaDon.getMaNV()+")");
+//                if (hoaDon.getTrangThai().equals("Đang xử lý")) {
+//                    Object[] row = {
+//                        hoaDon.getMaHD(),
+//                        hoaDon.getTenNV(),
+//                        hoaDon.getThoiGianTao(),
+//                        hoaDon.getTongTien(),
+//                        hoaDon.getGhiChu()
+//                    };
+//                    model.addRow(row);
+//                    System.out.println("" + row);
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void fillToTableHDCT() {
+//        DefaultTableModel model = (DefaultTableModel) tblHDCT.getModel();
+//        model.setRowCount(0);
+//        try {
+//            List<HoaDon> list = hddao.selectAll();
+//            System.out.println("" + list); 
+//            for (HoaDon hoaDon : list) {
+//                if (hoaDon.getTrangThai().equals("Đã xử lý")) {
+//                    List<SanPham> listsp = spdao.selectAll();
+//                    for (SanPham sanPham : listsp) {
+//                        if (hoaDon.getMaSP().equals(sanPham.getMaSP())) {
+//                            tenSP = sanPham.getTenSP();
+//                            dongia = sanPham.getGia();
+//                        }
+//                    }
+//                    Object[] row = {
+//                        tenSP,
+//                        hoaDon.getTenNV(),
+//                        hoaDon.getThoiGianTao(),
+//                        hoaDon.getTongTien(),
+//                        hoaDon.getGhiChu()
+//                    };
+//                    model.addRow(row);
+//                    System.out.println("" + row);
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void fillToTableLSHD() {
+//        DefaultTableModel model = (DefaultTableModel) tblLSHD.getModel();
+//        model.setRowCount(0);
+//        try {
+//            List<HoaDon> list = hddao.selectAll();
 //            System.out.println("" + list);
-            for (HoaDon hoaDon : list) {
-//                nguoiTao = String.valueOf(hoaDon.getTenNV()+"("+hoaDon.getMaNV()+")");
-                if (hoaDon.getTrangThai().equals("Đang xử lý")) {
-                    Object[] row = {
-                        hoaDon.getMaHD(),
-                        hoaDon.getTenNV(),
-                        hoaDon.getThoiGianTao(),
-                        hoaDon.getTongTien(),
-                        hoaDon.getGhiChu()
-                    };
-                    model.addRow(row);
-                    System.out.println("" + row);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void fillToTableHDCT() {
-        DefaultTableModel model = (DefaultTableModel) tblHDCT.getModel();
-        model.setRowCount(0);
-        try {
-            List<HoaDon> list = hddao.selectAll();
-            System.out.println("" + list); 
-            for (HoaDon hoaDon : list) {
-                if (hoaDon.getTrangThai().equals("Đã xử lý")) {
-                    List<SanPham> listsp = spdao.selectAll();
-                    for (SanPham sanPham : listsp) {
-                        if (hoaDon.getMaSP().equals(sanPham.getMaSP())) {
-                            tenSP = sanPham.getTenSP();
-                            dongia = sanPham.getGia();
-                        }
-                    }
-                    Object[] row = {
-                        tenSP,
-                        hoaDon.getTenNV(),
-                        hoaDon.getThoiGianTao(),
-                        hoaDon.getTongTien(),
-                        hoaDon.getGhiChu()
-                    };
-                    model.addRow(row);
-                    System.out.println("" + row);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void fillToTableLSHD() {
-        DefaultTableModel model = (DefaultTableModel) tblLSHD.getModel();
-        model.setRowCount(0);
-        try {
-            List<HoaDon> list = hddao.selectAll();
-            System.out.println("" + list);
-            for (HoaDon hoaDon : list) {
-//                nguoiTao = String.valueOf(hoaDon.getTenNV()+"("+hoaDon.getMaNV()+")");
-                if (hoaDon.getTrangThai().equals("Đã xử lý") || hoaDon.getTrangThai().equals("Đã hủy")) {
-                    Object[] row = {
-                        hoaDon.getMaHD(),
-                        hoaDon.getTenNV(),
-                        hoaDon.getThoiGianTao(),
-                        hoaDon.getTongTien(),
-                        hoaDon.getGhiChu()
-                    };
-                    model.addRow(row);
-                    System.out.println("" + row);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//            for (HoaDon hoaDon : list) {
+////                nguoiTao = String.valueOf(hoaDon.getTenNV()+"("+hoaDon.getMaNV()+")");
+//                if (hoaDon.getTrangThai().equals("Đã xử lý") || hoaDon.getTrangThai().equals("Đã hủy")) {
+//                    Object[] row = {
+//                        hoaDon.getMaHD(),
+//                        hoaDon.getTenNV(),
+//                        hoaDon.getThoiGianTao(),
+//                        hoaDon.getTongTien(),
+//                        hoaDon.getGhiChu()
+//                    };
+//                    model.addRow(row);
+//                    System.out.println("" + row);
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

@@ -10,22 +10,9 @@ import java.util.Date;
  *
  * @author Admin
  */
-
 public class HoaDon {
 
-    public HoaDon(String maHD, Date thoiGianTao, String maNV, String tenNV, String maSP, double tongTien, String maKM, double chiPhiKhac, boolean hinhThucThanhToan, String ghiChu, String trangThai) {
-        this.maHD = maHD;
-        this.thoiGianTao = thoiGianTao;
-        this.maNV = maNV;
-        this.tenNV = tenNV;
-        this.maSP = maSP;
-        this.tongTien = tongTien;
-        this.maKM = maKM;
-        this.chiPhiKhac = chiPhiKhac;
-        this.hinhThucThanhToan = hinhThucThanhToan;
-        this.ghiChu = ghiChu;
-        this.trangThai = trangThai;
-    }
+    private String maHD;
 
     public String getMaHD() {
         return maHD;
@@ -43,28 +30,20 @@ public class HoaDon {
         this.thoiGianTao = thoiGianTao;
     }
 
-    public String getMaNV() {
-        return maNV;
+    public Date getThoiGianThanhToan() {
+        return thoiGianThanhToan;
     }
 
-    public void setMaNV(String maNV) {
-        this.maNV = maNV;
+    public void setThoiGianThanhToan(Date thoiGianThanhToan) {
+        this.thoiGianThanhToan = thoiGianThanhToan;
     }
 
-    public String getTenNV() {
-        return tenNV;
+    public String getNguoiTao() {
+        return nguoiTao;
     }
 
-    public void setTenNV(String tenNV) {
-        this.tenNV = tenNV;
-    }
-
-    public String getMaSP() {
-        return maSP;
-    }
-
-    public void setMaSP(String maSP) {
-        this.maSP = maSP;
+    public void setNguoiTao(String nguoiTao) {
+        this.nguoiTao = nguoiTao;
     }
 
     public double getTongTien() {
@@ -91,11 +70,11 @@ public class HoaDon {
         this.chiPhiKhac = chiPhiKhac;
     }
 
-    public boolean isHinhThucThanhToan() {
+    public String getHinhThucThanhToan() {
         return hinhThucThanhToan;
     }
 
-    public void setHinhThucThanhToan(boolean hinhThucThanhToan) {
+    public void setHinhThucThanhToan(String hinhThucThanhToan) {
         this.hinhThucThanhToan = hinhThucThanhToan;
     }
 
@@ -115,17 +94,38 @@ public class HoaDon {
         this.trangThai = trangThai;
     }
 
+    public String getTenNguoiTao() {
+        return tenNguoiTao;
+    }
+
+    public void setTenNguoiTao(String tenNguoiTao) {
+        this.tenNguoiTao = tenNguoiTao;
+    }
+
+    public HoaDon(String maHD, Date thoiGianTao, Date thoiGianThanhToan, String nguoiTao, double tongTien, String maKM, double chiPhiKhac, String hinhThucThanhToan, String ghiChu, String trangThai, String tenNguoiTao) {
+        this.maHD = maHD;
+        this.thoiGianTao = thoiGianTao;
+        this.thoiGianThanhToan = thoiGianThanhToan;
+        this.nguoiTao = nguoiTao;
+        this.tongTien = tongTien;
+        this.maKM = maKM;
+        this.chiPhiKhac = chiPhiKhac;
+        this.hinhThucThanhToan = hinhThucThanhToan;
+        this.ghiChu = ghiChu;
+        this.trangThai = trangThai;
+        this.tenNguoiTao = tenNguoiTao;
+    }
+
     public HoaDon() {
     }
-    private String maHD;
     private Date thoiGianTao;
-    private String maNV;
-    private String tenNV;
-    private String maSP;
+    private Date thoiGianThanhToan;
+    private String nguoiTao;
     private double tongTien;
     private String maKM;
     private double chiPhiKhac;
-    private boolean hinhThucThanhToan;
+    private String hinhThucThanhToan;
     private String ghiChu;
     private String trangThai;
+    private String tenNguoiTao;
 }

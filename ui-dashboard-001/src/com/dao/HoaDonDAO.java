@@ -16,7 +16,9 @@ import java.util.List;
  */
 public class HoaDonDAO extends PeachCoffeeDAO<HoaDon, String> {
 
-    final String SELECT_ALL_SQL = "SELECT * FROM HoaDon";
+    final String INSERT_SQL = "INSERT INTO HoaDon (MaHD, ThoiGianTao, ThoiGianTT, NguoiTao,  TongTien, MaKM, ChiPhiKhac, HinhThucTT, GhiChu, TrangThai, TenNguoiTao)\n"
+            + "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+    final String SELECT_ALL_SQL = "select * from HoaDon";
 
     @Override
     public void insert(HoaDon entity) {
@@ -50,28 +52,27 @@ public class HoaDonDAO extends PeachCoffeeDAO<HoaDon, String> {
 
     @Override
     public List<HoaDon> selectBySql(String sql, Object... args) {
-     List<HoaDon> List = new ArrayList<>();
+        List<HoaDon> list = new ArrayList<>();
         try {
             ResultSet rs = JdbcHelper.query(sql, args);
-            while (rs.next()) {                
+            while (rs.next()) {
                 HoaDon entity = new HoaDon();
                 entity.setMaHD(rs.getString("MaHD"));
                 entity.setThoiGianTao(rs.getDate("ThoiGianTao"));
-                entity.setMaNV(rs.getString("NguoiTao"));
-                entity.setTenNV(rs.getString("TenNguoiTao"));
-                entity.setMaSP(rs.getString("SanPham"));
+                entity.setThoiGianThanhToan(rs.getDate("ThoiGianTT"));
+                entity.setNguoiTao(rs.getString("NguoiTao"));
                 entity.setTongTien(rs.getDouble("TongTien"));
                 entity.setMaKM(rs.getString("MaKM"));
                 entity.setChiPhiKhac(rs.getDouble("ChiPhiKhac"));
-                entity.setHinhThucThanhToan(rs.getBoolean("HinhThucTT"));
+                entity.setHinhThucThanhToan(rs.getString("HinhThucTT"));
                 entity.setGhiChu(rs.getString("GhiChu"));
                 entity.setTrangThai(rs.getString("TrangThai"));
-                List.add(entity);
+                entity.setTenNguoiTao(rs.getString("TenNguoiTao"));
+                list.add(entity);
             }
         } catch (Exception e) {
-            e.printStackTrace(); 
+            throw new RuntimeException(e);
         }
-     return List;
+        return list;
     }
-
 }

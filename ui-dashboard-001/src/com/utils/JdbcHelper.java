@@ -17,7 +17,7 @@ import java.sql.ResultSet;
 public class JdbcHelper {
 
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static String dburl = "jdbc:sqlserver://localhost:1433;" + "databaseName=Peach_Coffee;encrypt=false;trustServerCertificate=true;";
+    private static String dburl = "jdbc:sqlserver://localhost:1433;" + "databaseName=Peach_Coffee1;encrypt=false;trustServerCertificate=true;";
     private static String username = "sa";
     private static String password = "12345";
 

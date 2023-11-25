@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class Item extends javax.swing.JPanel {
 
@@ -42,15 +43,23 @@ public class Item extends javax.swing.JPanel {
     private SanPham data;
 
     public void setData(SanPham data) {
-            addMouseListener(new MouseAdapter() {
+        addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
+
                 addOverlay(jPanel2);
+
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 removeOverlay(jPanel2);
+            }
+        });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                addOverlay(jPanel2);
             }
         });
         this.data = data;
@@ -63,7 +72,8 @@ public class Item extends javax.swing.JPanel {
         DecimalFormat df = new DecimalFormat("#,##0.00");
         lbPrice.setText(df.format(data.getGia()));
     }
-      private void addOverlay(JPanel panel) {
+
+    private void addOverlay(JPanel panel) {
         panel.setOpaque(true);
         JLabel overlayLabel = new JLabel();
         overlayLabel.setText("+");
@@ -73,7 +83,7 @@ public class Item extends javax.swing.JPanel {
         overlayLabel.setVerticalAlignment(JLabel.CENTER);
 //        ImageIcon icon = new ImageIcon(getClass().getResource("/com/icon/1.png"));
 //        overlayLabel.setIcon(icon);
-        overlayLabel.setSize(165,165);
+        overlayLabel.setSize(165, 165);
         panel.add(overlayLabel);
         panel.setBackground(new Color(0, 0, 0, 50));
         panel.repaint();
